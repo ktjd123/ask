@@ -1,0 +1,44 @@
+.ask{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80vw;
+}
+
+.ask textarea{
+    resize: none;
+    height: 100px;
+    border: 1px solid #EEE;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 1rem;
+    width: 100%;
+}
+
+.ask .count{
+    position: absolute;
+    right: 10px;
+    bottom: 60%;
+}
+
+.ask .hr{
+    width: 100%;
+    border-top: 1px solid #dee2e6;
+    margin: 1rem 0;
+}
+
+.ask .send{
+    text-align: center;
+    width: 80%;
+    font-size: 2rem;
+    color: white;
+    padding: 10px 30px 10px 30px;
+    background: #8ce99a;
+    border-radius: 10px;
+}
+
+.ask .description{
+    font-size: 0.5rem;
+    text-align: center;
+}

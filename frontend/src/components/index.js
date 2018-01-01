@@ -1,4 +1,4 @@
 
 export {MainTemplate} from './Template'
 export {Header} from './Header'
-export {Profile} from './Main'
+export {Profile, Menu, Ask} from './Main'

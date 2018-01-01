@@ -1,8 +1,9 @@
 .mainTemplate{
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
-.mainTemplate .profile{
-    border-bottom: 1px solid lightgray;
+.mainTemplate .menu{
+    margin-top: 1rem;
 }

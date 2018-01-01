@@ -1,12 +1,20 @@
 import React from 'react';
 import './Profile.css'
 
-const Profile = () => {
-    return (
-        <div className='profile'>
-            <div className='name'>ASK</div>
-        </div>
-    );
+class Profile extends React.Component {
+
+    shouldComponentUpdate(nextProps, nextState) {
+        return false
+    }
+    
+    render(){
+        return (
+            <div className='profile'>
+                <div className='name'>김성민</div>
+                
+            </div>
+        );
+    }
 };
 
 export default Profile;

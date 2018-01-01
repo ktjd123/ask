@@ -1,11 +1,47 @@
 import React, { Component } from 'react';
-import {MainTemplate} from 'components'
+import {MainTemplate, Ask, Menu, Profile} from 'components'
 
 class Main extends Component {
+
+    state = {
+        input: '',
+        count: 0,
+        selected: 'ask'
+    }
+
+    handleChange = (e) => {
+        let count = e.target.value.length
+        this.setState({
+            input: e.target.value,
+            count: count
+        })
+    }
+
+    handleToggle = (ask) => {
+        this.setState({
+            selected: ask
+        })
+    }
+
     render() {
+        const {input, count, selected} = this.state
+        const {
+            handleChange,
+            handleToggle
+        } = this
+
         return (
             <div>
-                <MainTemplate/>
+                <MainTemplate 
+                Profile={Profile}
+                Ask={Ask}
+                Menu={Menu} 
+                value={input} 
+                onChange={handleChange} 
+                count={count}
+                onToggle={handleToggle}
+                selected={selected}
+                />
             </div>
         );
     }
