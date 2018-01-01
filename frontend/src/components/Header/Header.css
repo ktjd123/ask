@@ -1,0 +1,28 @@
+.header{
+    background: #69db7c;
+    height: 70px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.16);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.header .left{
+    flex-grow: 1;
+}
+
+.header .logo{
+    flex-grow: 1;
+    color: white;
+    font-weight: 800;
+    font-size: 2rem;
+}
+
+.header .right {
+    flex-grow: 1;
+}

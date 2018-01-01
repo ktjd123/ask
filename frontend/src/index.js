@@ -19,7 +19,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './index.css'
 
 //Example import
-import {AppContainer, About} from 'containers'
+import {Main} from 'containers'
 //Example import end
 
 const store = createStore(reducers, applyMiddleware(thunk));
@@ -28,14 +28,9 @@ ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter>
             <div>
-
-                <Route exact path="/" component={AppContainer} />
-                
                 <Switch>
-                    <Route path="/about/:name" component={About} />
-                    <Route path="/about" component={About} />
+                    <Route path='/' component={Main}/>
                 </Switch>
-                
             </div>
         </BrowserRouter>
     </Provider>
