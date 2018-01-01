@@ -1,9 +1,58 @@
 .profile{
     display: flex;
     flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
 .profile .name{
     font-size: 2rem;
     margin-bottom: 20px;
+}
+
+.profile .shareBox{
+    display: flex;
+    align-items: center;
+}
+
+.profile .link{
+    background: #dee2e6;
+    padding: 10px 20px 10px 20px;
+    font-size: 1rem;
+    border-radius: 10px;
+}
+
+.profile .buttonBox{
+    margin-left: 10px;
+    display: flex;
+    background: white;
+    border: 1px solid #EEE;
+    padding: 10px 10px 10px 10px;
+    border-radius: 3px;
+}
+
+.profile .buttonBox div {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px 0 10px;
+}
+
+.profile .buttonBox div img{
+    width: 30px;
+    height: 30px;
+}
+
+.profile .buttonBox div + div{
+    border-left: 1px solid #eee;
+}
+
+@media (max-width: 800px){
+    .profile .shareBox{
+        flex-direction: column;
+    }
+    .profile .link{
+        margin-bottom: 10px;
+    }
 }

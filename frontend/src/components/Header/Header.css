@@ -21,8 +21,15 @@
     color: white;
     font-weight: 800;
     font-size: 2rem;
+    letter-spacing: 0.1rem;
 }
 
 .header .right {
     flex-grow: 1;
+}
+
+.header .right .log-out{
+    font-size: 24px;
+    color: white;
+    width: 0;
 }

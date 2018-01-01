@@ -7,7 +7,9 @@ const Header = () => {
         <div className="header">
             <div className='left'></div>
             <Link to='/' className='logo'>ASKED</Link>
-            <div className="right"></div>
+            <div className="right">
+                <a><i className="material-icons log-out">lock_open</i></a>
+            </div>
         </div>
     );
 };

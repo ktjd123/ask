@@ -9,6 +9,7 @@
     height: 50px;
     font-size: 2rem;
     padding-top: 7px;
+    cursor: pointer;
 }
 
 .menu .hr{
