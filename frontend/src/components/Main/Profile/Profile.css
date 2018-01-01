@@ -1,0 +1,10 @@
+.profile{
+    display: flex;
+    flex-direction: column;
+}
+
+.profile .name{
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 20px;
+}

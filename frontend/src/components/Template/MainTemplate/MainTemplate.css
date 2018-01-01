@@ -1,0 +1,8 @@
+.mainTemplate{
+    display: flex;
+    flex-direction: column;
+}
+
+.mainTemplate .profile{
+    border-bottom: 1px solid lightgray;
+}
