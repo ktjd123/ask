@@ -13,6 +13,35 @@ class Register extends Component {
         email: ''
     }
 
+    componentWillMount() {
+        function getCookie(name) {
+            let value = "; "+ document.cookie
+            let parts = value.split("; " + name + "=")
+            if(parts.length === 2) return parts.pop().split(';').shift();
+        }
+        let loginData = getCookie("key")
+        if(typeof loginData === "undefined") return;
+        loginData = JSON.parse(atob(loginData))
+        if(!loginData.isLoggedIn) return;
+
+        this.props.getStatusRequest().then(() => {
+            if(this.props.mainStatus.valid){
+                let loginData = {
+                    isLoggedIn: true,
+                    id: this.props.status.currentUser,
+                    name: this.props.status.currentName
+                }
+                let date = new Date()
+                date.setTime(date.getTime() + ( 365 * 24 * 60 * 60 * 1000))
+                let expires = ";expires=" + date.toGMTString()
+                let cookie = "key=" + btoa(JSON.stringify(loginData))+expires
+                document.cookie = cookie
+                this.props.history.push('/' + this.props.status.currentUser)
+                return
+            }
+        })
+    }
+
     handleChange = (e) => {
         switch(e.target.className){
             case 'id':

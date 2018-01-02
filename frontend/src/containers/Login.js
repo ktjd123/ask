@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {LoginTemplate, Loginc} from 'components'
 import {connect} from 'react-redux'
-import { loginRequest } from 'actions/authentication'
+import { loginRequest,getStatusRequest } from 'actions/authentication'
 import {toast} from 'react-toastify'
 
 class Login extends Component {
@@ -10,6 +10,37 @@ class Login extends Component {
         id: '',
         pw: ''
     }
+
+    
+    componentWillMount() {
+        function getCookie(name) {
+            let value = "; "+ document.cookie
+            let parts = value.split("; " + name + "=")
+            if(parts.length === 2) return parts.pop().split(';').shift();
+        }
+        let loginData = getCookie("key")
+        if(typeof loginData === "undefined") return;
+        loginData = JSON.parse(atob(loginData))
+        if(!loginData.isLoggedIn) return;
+
+        this.props.getStatusRequest().then(() => {
+            if(this.props.mainStatus.valid){
+                let loginData = {
+                    isLoggedIn: true,
+                    id: this.props.status.currentUser,
+                    name: this.props.status.currentName
+                }
+                let date = new Date()
+                date.setTime(date.getTime() + ( 365 * 24 * 60 * 60 * 1000))
+                let expires = ";expires=" + date.toGMTString()
+                let cookie = "key=" + btoa(JSON.stringify(loginData))+expires
+                document.cookie = cookie
+                this.props.history.push('/' + this.props.status.currentUser)
+                return
+            }
+        })
+    }
+    
 
     handleChange = e => {
         if(e.target.className === 'id'){
@@ -29,7 +60,8 @@ class Login extends Component {
             if(this.props.status === 'SUCCESS') {
                 let loginData = {
                     isLoggedIn: true,
-                    username: id
+                    id: this.props.status.currentUser,
+                    name: this.props.status.currentName
                 }
                 let date = new Date()
                 date.setTime(date.getTime() + ( 365 * 24 * 60 * 60 * 1000))
@@ -67,7 +99,8 @@ class Login extends Component {
 
 const mapStateToProps = state => {
     return {
-        status: state.authentication.login.status
+        status: state.authentication.login.status,
+        mainStatus: state.authentication.status
     }
 }
 
@@ -75,6 +108,9 @@ const mapDispatchToProps = dispatch => {
     return {
         loginRequest: (id, pw) => {
             return dispatch(loginRequest(id, pw))
+        },
+        getStatusRequest: () => {
+            return dispatch(getStatusRequest())
         }
     }
 }

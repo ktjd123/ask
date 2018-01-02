@@ -4,7 +4,10 @@ import {
     AUTH_LOGIN_FAILURE,
     AUTH_REGISTER,
     AUTH_REGISTER_SUCCESS,
-    AUTH_REGISTER_FAILURE
+    AUTH_REGISTER_FAILURE,
+    AUTH_GET_STATUS,
+    AUTH_GET_STATUS_SUCCESS,
+    AUTH_GET_STATUS_FAILURE
 }from 'actions/ActionTypes';
 import update from 'react-addons-update'
 
@@ -17,8 +20,10 @@ const initialState = {
         error: -1
     },
     status: {
+        valid: false,
         isLoggedIn: false,
-        currentUser: ''
+        currentUser: '',
+        currentName: ''
     }
 }  
 
@@ -37,6 +42,7 @@ function authentication(state = initialState, action){
                 status: {$set: 'SUCCESS'}
             },
             status: {
+                valid: {$set: true},
                 isLoggedIn: {$set: true},
                 currentUser: {$set: action.username}
             }
@@ -66,6 +72,29 @@ function authentication(state = initialState, action){
             register: {
                 status: {$set: 'FAILURE'},
                 error: {$set: action.error}
+            }
+        })
+        
+        case AUTH_GET_STATUS:
+        return update(state, {
+            status: {
+                isLoggedIn: {$set: true}
+            }
+        })
+
+        case AUTH_GET_STATUS_SUCCESS:
+        return update(state, {
+            status: {
+                valid: {$set: true},
+                currentUser: {$set: action.id},
+                currentName: {$set: action.name}
+            }
+        })
+        case AUTH_GET_STATUS_FAILURE:
+        return update(state, {
+            status: {
+                valid: {$set: false},
+                isLoggedIn: {$set: false}
             }
         })
 
