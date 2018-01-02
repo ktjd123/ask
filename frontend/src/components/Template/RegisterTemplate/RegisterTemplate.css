@@ -7,11 +7,11 @@
 }
 
 .registerTemplate .registerT{
-    margin-top: 10vh;
+    margin-top: 15vh;
 }
 
 @media (max-height: 500px){
     .registerTemplate .registerT{
-        margin-top: 50vh;
+        margin-top: 60vh;
     }
 }

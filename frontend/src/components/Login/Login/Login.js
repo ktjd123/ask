@@ -1,18 +1,27 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom'
 import './Login.css'
 
 class Login extends Component {
 
+    shouldComponentUpdate(nextProps, nextState) {
+        if(this.props.id === nextProps.id && this.props.pw === nextProps.pw){
+            return false
+        }
+        return true
+    }
+    
     render() {
+        const {onChange, id, pw, onLogin} = this.props
         return (
             <div className='login'>
                 <div className='input'>
-                    <input placeholder="ID" className='id'/>
-                    <input placeholder="PW" className='pw'/>
+                    <input placeholder="아이디" className='id' value={id} onChange={onChange}/>
+                    <input placeholder="비밀번호" type="password" className='pw' value={pw} onChange={onChange}/>
                 </div>
-                <div className='button'>
-                    <div className='loginB'>로그인</div>
-                    <div className='registerB'>회원가입</div>
+                <div className='buttonL'>
+                    <div className='loginB' onClick={onLogin}>로그인</div>
+                    <Link to='/register' className='registerB'>회원가입</Link>
                 </div>
             </div>
         );
