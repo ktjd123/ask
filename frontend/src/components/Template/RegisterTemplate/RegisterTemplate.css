@@ -1,4 +1,4 @@
-.loginTemplate{
+.registerTemplate{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -6,12 +6,12 @@
     height: 50vh;
 }
 
-.loginTemplate .loginT{
+.registerTemplate .registerT{
     margin-top: 10vh;
 }
 
 @media (max-height: 500px){
-    .loginTemplate .loginT{
+    .registerTemplate .registerT{
         margin-top: 50vh;
     }
 }

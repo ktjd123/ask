@@ -19,7 +19,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './index.css'
 
 //Example import
-import {Main, Login} from 'containers'
+import {Main, Login, Register} from 'containers'
 //Example import end
 
 import {ToastContainer} from 'react-toastify'
@@ -36,6 +36,7 @@ ReactDOM.render(
                 />
                 <Switch>
                     <Route path='/login' component={Login}/>
+                    <Route path='/register' component={Register}/>
                     <Route path='/' component={Main}/>
                 </Switch>
             </div>
