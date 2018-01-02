@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {LoginTemplate, Loginc} from 'components'
 import {connect} from 'react-redux'
-import { loginRequest } from '../actions/authentication';
+import { loginRequest } from 'actions/authentication'
 import {toast} from 'react-toastify'
 
 class Login extends Component {
@@ -31,8 +31,11 @@ class Login extends Component {
                     isLoggedIn: true,
                     username: id
                 }
-
-                document.cookie = "key=" + btoa(JSON.stringify(loginData))
+                let date = new Date()
+                date.setTime(date.getTime() + ( 365 * 24 * 60 * 60 * 1000))
+                let expires = ";expires=" + date.toGMTString()
+                let cookie = "key=" + btoa(JSON.stringify(loginData))+expires
+                document.cookie = cookie
                 
                 toast.success('로그인 완료!')
 

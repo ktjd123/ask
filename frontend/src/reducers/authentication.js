@@ -1,13 +1,20 @@
 import {
     AUTH_LOGIN,
     AUTH_LOGIN_SUCCESS,
-    AUTH_LOGIN_FAILURE
+    AUTH_LOGIN_FAILURE,
+    AUTH_REGISTER,
+    AUTH_REGISTER_SUCCESS,
+    AUTH_REGISTER_FAILURE
 }from 'actions/ActionTypes';
 import update from 'react-addons-update'
 
 const initialState = {
     login: {
         status: 'INIT'
+    },
+    register: {
+        status: 'INIT',
+        error: -1
     },
     status: {
         isLoggedIn: false,
@@ -38,6 +45,27 @@ function authentication(state = initialState, action){
         return update(state, {
             login: {
                 status: {$set: 'FAILURE'}
+            }
+        })
+        case AUTH_REGISTER:
+        return update(state, {
+            register: {
+                status: {$set: 'PENDING'}
+            }
+        })
+
+        case AUTH_REGISTER_SUCCESS:
+        return update(state, {
+            register: {
+                status: {$set: 'SUCCESS'}
+            }
+        })
+
+        case AUTH_REGISTER_FAILURE:
+        return update(state, {
+            register: {
+                status: {$set: 'FAILURE'},
+                error: {$set: action.error}
             }
         })
 
