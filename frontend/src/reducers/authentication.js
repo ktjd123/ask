@@ -91,6 +91,7 @@ function authentication(state = initialState, action){
             }
         })
         case AUTH_GET_STATUS_FAILURE:
+        console.log('fail')
         return update(state, {
             status: {
                 valid: {$set: false},

@@ -33,7 +33,8 @@ export function login(){
 
 export function loginSuccess(id){
     return {
-        type: AUTH_LOGIN_SUCCESS
+        type: AUTH_LOGIN_SUCCESS,
+        id
     }
 }
 
@@ -82,6 +83,8 @@ export function getStatusRequest(){
         return axios.get('/api/auth/getInfo')
         .then((res) => {
             dispatch(getStatusSuccess(res.data.info.id, res.data.info.name))
+        }).catch(err => {
+            dispatch(getStatusFailure())
         })
     }
 }

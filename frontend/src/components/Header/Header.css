@@ -31,9 +31,3 @@
 .header .right {
     flex-grow: 1;
 }
-
-.header .right .log-out{
-    font-size: 24px;
-    color: white;
-    width: 0;
-}

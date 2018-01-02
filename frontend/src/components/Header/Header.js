@@ -5,14 +5,10 @@ import {Link} from 'react-router-dom'
 const Header = () => {
 
     const loginRegex = /(login|register)/
-    let rightButton = (
-        <a><i className="material-icons log-out">lock_open</i></a>
-    )
     let leftButton = (
-        <a>내 애스크</a>
+        <Link to="/login">내 애스크</Link>
     )
     if(loginRegex.test(window.location.href)){
-        rightButton = undefined
         leftButton = undefined
     }
     return (
@@ -22,7 +18,7 @@ const Header = () => {
             </div>
             <Link to='/' className='logo'>ASKED</Link>
             <div className="right">
-                {rightButton}
+
             </div>
         </div>
     );

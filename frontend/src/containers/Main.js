@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import {MainTemplate, Ask, Menu, Profile, CardList} from 'components'
+import {getStatusRequest} from 'actions/authentication'
+import {toast} from 'react-toastify'
+import {connect} from 'react-redux'
 
 class Main extends Component {
 
@@ -8,6 +11,18 @@ class Main extends Component {
         count: 0,
         selected: 'ask'
     }
+
+    componentDidMount() {
+        this.props.getStatusRequest().then(() => {
+            if(this.props.mainStatus.valid){
+                return
+            }else{
+                toast.error('로그인을 한 후에 답변, 확인할 수 있습니다.')
+                this.props.history.push('/login')
+            }
+        })
+    }
+    
 
     handleChange = (e) => {
         let count = e.target.value.length
@@ -48,4 +63,18 @@ class Main extends Component {
     }
 }
 
-export default Main;
+const mapStateToProps = state => {
+    return {
+        mainStatus: state.authentication.status
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return{
+        getStatusRequest: () => {
+            return dispatch(getStatusRequest())
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

@@ -8,6 +8,9 @@ a{
     text-decoration: none;
     cursor: pointer;
 }
+a:visited{
+    color: white;
+}
 
 *{
     outline: none;
