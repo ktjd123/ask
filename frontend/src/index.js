@@ -19,7 +19,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './index.css'
 
 //Example import
-import {Main} from 'containers'
+import {Main, Login} from 'containers'
 //Example import end
 
 import {ToastContainer} from 'react-toastify'
@@ -32,9 +32,10 @@ ReactDOM.render(
             <div>
                 <ToastContainer
                     autoClose={3000}
-                    position="BOTTOM_CENTER"
+                    position="bottom-center"
                 />
                 <Switch>
+                    <Route path='/login' component={Login}/>
                     <Route path='/' component={Main}/>
                 </Switch>
             </div>

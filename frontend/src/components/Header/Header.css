@@ -15,6 +15,9 @@
 
 .header .left{
     flex-grow: 1;
+    color: white;
+    font-weight: 600;
+    width: 0;
 }
 
 .header .logo{
