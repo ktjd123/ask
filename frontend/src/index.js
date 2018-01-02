@@ -12,7 +12,7 @@ import reducers from 'reducers';
 import { Provider } from 'react-redux';
 
 //React router v4
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch , Redirect} from 'react-router-dom';
 //<Route path="/" component={AppContainer} /> - 이걸 페이지의 헤더파일로 해놓으면 굉장히 편리하겠다.
 
 //base css
@@ -37,7 +37,8 @@ ReactDOM.render(
                 <Switch>
                     <Route path='/login' component={Login}/>
                     <Route path='/register' component={Register}/>
-                    <Route path='/' component={Main}/>
+                    <Route path='/:id' component={Main}/>
+                    <Redirect from='/' to='/login'/>
                 </Switch>
             </div>
         </BrowserRouter>

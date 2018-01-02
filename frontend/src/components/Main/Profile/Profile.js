@@ -10,7 +10,10 @@ import twLogo from './twLogo.svg'
 class Profile extends React.Component {
 
     shouldComponentUpdate(nextProps, nextState) {
-        return false
+        if(this.props.name === nextProps.name){
+            return false
+        }
+        return true
     }
 
     copyToClipBoard = () => {
@@ -23,12 +26,13 @@ class Profile extends React.Component {
     }
 
     render() {
+        const {name} = this.props
         return (
             <div className='profile'>
             <Helmet>
-                <title>ASK :: 김성민</title>
+                <title>ASK :: {name}</title>
             </Helmet>
-                <div className='name'>김성민</div>
+                <div className='name'>{name}</div>
                 <div className='shareBox'>
                     <div className='link'>{window.location.href}</div>
                     <div className='buttonBox'>

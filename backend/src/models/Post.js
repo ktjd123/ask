@@ -12,7 +12,7 @@ const Post = new Schema({
 })
 
 Post.statics.posts = function (replier) {
-    return this.find({"replier": replier}, {"_id": false, "asker": false, "replier": true, "answer": true, "time": true, "replied": true}).sort({"_id": -1}).exec()
+    return this.find({"replier": replier}, {"question": true, "answer": true, "replier": true, "time": true}).sort({"_id": -1}).exec()
 }
 
 export default mongoose.model('Post', Post)

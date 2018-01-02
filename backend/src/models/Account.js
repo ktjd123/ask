@@ -21,6 +21,10 @@ Account.statics.findId = function(id) {
     return this.findOne({"id": id}).exec()
 }
 
+Account.statics.idTo_Id = function(id){
+    return this.findOne({"id": id}, {"_id": true}).exec()
+}
+
 Account.statics.findEmail = function (email) {
     return this.findOne({"email": email}).exec()
 }

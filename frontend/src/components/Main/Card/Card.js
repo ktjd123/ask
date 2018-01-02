@@ -2,7 +2,16 @@ import React, { Component } from 'react';
 import './Card.css'
 
 class Card extends Component {
+
+    shouldComponentUpdate(nextProps, nextState) {
+        if(this.props.data === nextProps.data){
+            return false
+        }
+        return true
+    }
+    
     render() {
+        const {data} = this.props
         return (
             <div className='card'>
                 <div className='info'>
@@ -10,8 +19,8 @@ class Card extends Component {
                     <div className='time'>1분전 작성</div>
                 </div>
                 <div className='main'>
-                    <div className='qs'>제가 그때 왜 그랬는지 아세요?</div>
-                    <div className='aw'>모르죠,,</div>
+                    <div className='qs'>{data.question}</div>
+                    <div className='aw'>{data.answer}</div>
                 </div>
                 <div className='add'>
                     <a><i className='material-icons'>star_border</i></a>

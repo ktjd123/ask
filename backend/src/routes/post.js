@@ -10,7 +10,7 @@ router.post('/', (req, res) => {
     const body = req.body
 
     const schema = Joi.object().keys({
-        replier: Joi.string().required(),
+        replier: Joi.string().min(3).max(10).required(),
         question: Joi.string().min(1).max(300).required()
     })
 
@@ -27,7 +27,8 @@ router.post('/', (req, res) => {
         })
     }
 
-    Account.findId(body.replier).then(user => {
+
+    Account.findId(req.body.replier).then(user => {
         if (!user) {
             return res.status(404).json({
                 code: 2
@@ -88,7 +89,7 @@ router.put('/:id', (req, res) => {
         post.replied = true
 
         post.save((err, post) => {
-            if(err) throw err;
+            if (err) throw err;
             return res.json({
                 success: true,
                 post
@@ -127,9 +128,30 @@ router.delete('/:id', (req, res) => {
     }).catch(err => { throw err })
 })
 
-router.get('/', (req, res) => {
-    Post.posts(req.body._id).then(posts => {
-        return res.json(posts)
+router.post('/id', (req, res) => {
+    const schema = Joi.object().keys({
+        id: Joi.string().min(3).max(10).required()
+    })
+    const result = Joi.validate({ id: req.body.id }, schema)
+    if (result.error) {
+        return res.status(400).json({
+            code: 0
+        })
+    }
+    let _id = undefined
+    Account.idTo_Id(req.body.id).then(user => {
+        if (!user) {
+            return res.status(404).json({
+                code: 1
+            })
+        }
+        _id = user._id
+
+        Post.posts(_id).then(posts => {
+            return res.json(posts)
+        }).catch(err => {
+            throw err
+        })
     })
 })
 

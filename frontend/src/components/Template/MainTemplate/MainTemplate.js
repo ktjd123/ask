@@ -2,12 +2,12 @@ import React from 'react';
 import {Header} from 'components'
 import './MainTemplate.css'
 
-const MainTemplate = ({Profile, Ask, Menu, value, count, onChange, onToggle, selected, CardList}) => {
+const MainTemplate = ({Profile, name, Ask, Menu, value, count, onChange, onToggle, selected,posts ,CardList}) => {
     return (
         <div className='mainTemplate'>
             <Header/>
             <section className='profile'>
-                <Profile/>
+                <Profile name={name}/>
             </section>
             <section className='ask'>
                 <Ask value={value} onChange={onChange} count={count}/>
@@ -16,7 +16,7 @@ const MainTemplate = ({Profile, Ask, Menu, value, count, onChange, onToggle, sel
                 <Menu onToggle={onToggle} selected={selected}/>
             </section>
             <section className='cardContainer'>
-                <CardList/>
+                <CardList posts={posts}/>
             </section>
         </div>
     );

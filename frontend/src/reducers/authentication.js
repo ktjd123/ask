@@ -7,8 +7,11 @@ import {
     AUTH_REGISTER_FAILURE,
     AUTH_GET_STATUS,
     AUTH_GET_STATUS_SUCCESS,
-    AUTH_GET_STATUS_FAILURE
-}from 'actions/ActionTypes';
+    AUTH_GET_STATUS_FAILURE,
+    GET_INFO,
+    GET_INFO_SUCCESS,
+    GET_INFO_FAILURE
+}from '../actions/ActionTypes';
 import update from 'react-addons-update'
 
 const initialState = {
@@ -18,6 +21,11 @@ const initialState = {
     register: {
         status: 'INIT',
         error: -1
+    },
+    info: {
+        status: 'INIT',
+        name: '',
+        post: []
     },
     status: {
         valid: false,
@@ -91,11 +99,33 @@ function authentication(state = initialState, action){
             }
         })
         case AUTH_GET_STATUS_FAILURE:
-        console.log('fail')
         return update(state, {
             status: {
                 valid: {$set: false},
                 isLoggedIn: {$set: false}
+            }
+        })
+
+        case GET_INFO:
+        return update(state, {
+            info: {
+                status: {$set: 'PENDING'}
+            }
+        })
+
+        case GET_INFO_SUCCESS:
+        return update(state, {
+            info:{
+                status: {$set: 'SUCCESS'},
+                name: {$set: action.user.name}
+            }
+        })
+
+        case GET_INFO_FAILURE:
+        return update(state, {
+            info:{
+                status: {$set: 'FAILURE'},
+                name: {$set: ''}
             }
         })
 

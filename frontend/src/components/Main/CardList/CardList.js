@@ -4,11 +4,15 @@ import './CardList.css'
 
 class CardList extends Component {
     render() {
-        return (
-            <div>
-                <Card/>
-            </div>
-        );
+        const {posts} = this.props
+        return posts.map(posts => {
+            return (
+                <Card 
+                data={posts}
+                key = {posts._id}
+                />
+            )
+        })
     }
 }
 

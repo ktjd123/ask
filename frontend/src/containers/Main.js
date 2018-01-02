@@ -1,24 +1,49 @@
 import React, { Component } from 'react';
 import {MainTemplate, Ask, Menu, Profile, CardList} from 'components'
 import {getStatusRequest} from 'actions/authentication'
+import {getInfoRequest} from 'actions/info'
+import {getPostRequest} from 'actions/post'
 import {toast} from 'react-toastify'
 import {connect} from 'react-redux'
 
 class Main extends Component {
 
     state = {
+        name: '',
         input: '',
         count: 0,
-        selected: 'ask'
+        selected: 'ask',
+        posts: []
     }
 
-    componentDidMount() {
+    componentWillMount() {
         this.props.getStatusRequest().then(() => {
             if(this.props.mainStatus.valid){
                 return
             }else{
-                toast.error('로그인을 한 후에 질문, 확인할 수 있습니다.')
+                toast.error('로그인을 한 후에 질문, 답변을 확인할 수 있습니다.')
                 this.props.history.push('/login')
+            }
+        })
+        const id = this.props.match.params.id
+        this.props.getInfoRequest(id).then(() => {
+            if(this.props.infoStatus.status === "SUCCESS"){
+                this.setState({
+                    name: this.props.infoStatus.name
+                })
+            }else{
+                toast.error('없는 사용자입니다')
+                this.props.history.push('/'+this.props.mainStatus.currentUser)
+            }
+        })
+        this.props.getPostRequest(id).then(() => {
+            if(this.props.postStatus.status === "SUCCESS"){
+                console.log(this.props.postStatus.data)
+                this.setState({
+                    posts: this.props.postStatus.data
+                })
+            }else{
+                toast.error('다시 시도해주세요')
             }
         })
     }
@@ -39,7 +64,7 @@ class Main extends Component {
     }
 
     render() {
-        const {input, count, selected} = this.state
+        const {input, count, selected, name, posts} = this.state
         const {
             handleChange,
             handleToggle
@@ -47,8 +72,9 @@ class Main extends Component {
 
         return (
             <div>
-                <MainTemplate 
+                <MainTemplate
                 Profile={Profile}
+                name={name}
                 Ask={Ask}
                 Menu={Menu} 
                 value={input} 
@@ -56,6 +82,7 @@ class Main extends Component {
                 count={count}
                 onToggle={handleToggle}
                 selected={selected}
+                posts={posts}
                 CardList={CardList}
                 />
             </div>
@@ -65,7 +92,9 @@ class Main extends Component {
 
 const mapStateToProps = state => {
     return {
-        mainStatus: state.authentication.status
+        mainStatus: state.authentication.status,
+        infoStatus: state.authentication.info,
+        postStatus: state.post.list
     }
 }
 
@@ -73,6 +102,12 @@ const mapDispatchToProps = dispatch => {
     return{
         getStatusRequest: () => {
             return dispatch(getStatusRequest())
+        },
+        getInfoRequest: (id) => {
+            return dispatch(getInfoRequest(id))
+        },
+        getPostRequest: (id) => {
+            return dispatch(getPostRequest(id))
         }
     }
 }
