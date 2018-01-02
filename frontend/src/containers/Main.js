@@ -17,7 +17,7 @@ class Main extends Component {
             if(this.props.mainStatus.valid){
                 return
             }else{
-                toast.error('로그인을 한 후에 답변, 확인할 수 있습니다.')
+                toast.error('로그인을 한 후에 질문, 확인할 수 있습니다.')
                 this.props.history.push('/login')
             }
         })
