@@ -36,6 +36,9 @@ class Main extends Component {
                 this.props.history.push('/'+this.props.mainStatus.currentUser)
             }
         })
+    }
+    componentDidMount() {
+        const id = this.props.match.params.id
         this.props.getPostRequest(id).then(() => {
             if(this.props.postStatus.status === "SUCCESS"){
                 console.log(this.props.postStatus.data)
@@ -47,6 +50,7 @@ class Main extends Component {
             }
         })
     }
+    
     
 
     handleChange = (e) => {
