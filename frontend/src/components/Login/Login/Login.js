@@ -22,6 +22,7 @@ class Login extends Component {
                 <div className='buttonL'>
                     <div className='loginB' onClick={onLogin}>로그인</div>
                     <Link to='/register' className='registerB'>회원가입</Link>
+                    답변하려면 로그인이 필요합니다.
                 </div>
             </div>
         );

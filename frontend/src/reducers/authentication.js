@@ -44,7 +44,7 @@ function authentication(state = initialState, action){
             status: {
                 valid: {$set: true},
                 isLoggedIn: {$set: true},
-                currentUser: {$set: action.username}
+                currentUser: {$set: action.id}
             }
         })
         case AUTH_LOGIN_FAILURE:

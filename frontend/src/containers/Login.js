@@ -35,7 +35,7 @@ class Login extends Component {
                 let expires = ";expires=" + date.toGMTString()
                 let cookie = "key=" + btoa(JSON.stringify(loginData))+expires
                 document.cookie = cookie
-                this.props.history.push('/' + this.props.status.currentUser)
+                this.props.history.push('/' + this.props.mainStatus.currentUser)
                 return
             }
         })

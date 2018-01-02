@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {RegisterTemplate, Registerc} from 'components'
 import {connect} from 'react-redux'
-import {registerRequest} from 'actions/authentication'
+import {registerRequest, getStatusRequest} from 'actions/authentication'
 import {toast} from 'react-toastify'
 
 class Register extends Component {
@@ -36,7 +36,7 @@ class Register extends Component {
                 let expires = ";expires=" + date.toGMTString()
                 let cookie = "key=" + btoa(JSON.stringify(loginData))+expires
                 document.cookie = cookie
-                this.props.history.push('/' + this.props.status.currentUser)
+                this.props.history.push('/' + this.props.mainStatus.currentUser)
                 return
             }
         })
@@ -98,7 +98,8 @@ class Register extends Component {
 const mapStateToProps = state => {
     return {
         status: state.authentication.register.status,
-        errorCode: state.authentication.register.error
+        errorCode: state.authentication.register.error,
+        mainStatus: state.authentication.status
     }
 }
 
@@ -106,6 +107,9 @@ const mapDispatchToProps = dispatch => {
     return {
         registerRequest: (id, pw, name, email) => {
             return dispatch(registerRequest(id, pw, name, email))
+        },
+        getStatusRequest: () => {
+            return dispatch(getStatusRequest())
         }
     }
 }
