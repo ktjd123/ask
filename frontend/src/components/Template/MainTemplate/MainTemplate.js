@@ -2,7 +2,7 @@ import React from 'react';
 import {Header} from 'components'
 import './MainTemplate.css'
 
-const MainTemplate = ({Profile, Ask, Menu, value, count, onChange, onToggle, selected}) => {
+const MainTemplate = ({Profile, Ask, Menu, value, count, onChange, onToggle, selected, CardList}) => {
     return (
         <div className='mainTemplate'>
             <Header/>
@@ -14,6 +14,9 @@ const MainTemplate = ({Profile, Ask, Menu, value, count, onChange, onToggle, sel
             </section>
             <section className='menu'>
                 <Menu onToggle={onToggle} selected={selected}/>
+            </section>
+            <section className='cardContainer'>
+                <CardList/>
             </section>
         </div>
     );

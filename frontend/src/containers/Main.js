@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {MainTemplate, Ask, Menu, Profile} from 'components'
+import {MainTemplate, Ask, Menu, Profile, CardList} from 'components'
 
 class Main extends Component {
 
@@ -41,6 +41,7 @@ class Main extends Component {
                 count={count}
                 onToggle={handleToggle}
                 selected={selected}
+                CardList={CardList}
                 />
             </div>
         );

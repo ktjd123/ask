@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import {Card} from 'components'
 import './CardList.css'
 
 class CardList extends Component {
     render() {
         return (
             <div>
-                CardList
+                <Card/>
             </div>
         );
     }
