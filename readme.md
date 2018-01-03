@@ -1,1 +1,1 @@
-<h1>anonymous ask but saves account profile and Ip address</h1>
+<h1>anonymous ask platform</h1>
