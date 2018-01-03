@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import TimeAgo from 'react-timeago'
+import koreanString from 'react-timeago/lib/language-strings/ko'
+import buildFormatter from 'react-timeago/lib/formatters/buildFormatter'
+ 
 import './Card.css'
 
 class Card extends Component {
@@ -15,6 +19,7 @@ class Card extends Component {
         const { data, awI, awICount, onChange, isMine, onAnswer, onRemove} = this.props
         let answer = undefined
         let remove = undefined
+        const formatter = buildFormatter(koreanString)
         if (!isMine) {
             answer = (
                 <div className='aw'>{data.answer}</div>
@@ -42,17 +47,19 @@ class Card extends Component {
             <div className='card'>
                 <div className='info'>
                     <div className='who'>익명</div>
-                    <div className='time'>1분전 작성</div>
+                    <div className='time'><TimeAgo date={data.time} formatter={formatter}/></div>
                     {remove}
                 </div>
                 <div className='main'>
                     <div className='qs'>{data.question}</div>
                     {answer}
                 </div>
-                <div className='add'>
+
+                {/* <div className='add'>
                     <a><i className='material-icons'>star_border</i></a>
                     <div className='amount'>32</div>
-                </div>
+                </div> */}
+
             </div>
         );
     }

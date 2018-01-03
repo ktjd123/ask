@@ -15,9 +15,9 @@ class Menu extends React.Component {
         const {onToggle, selected} = this.props
         return (
             <div className='menu'>
-                <div className={`asked ${selected==="ask" && 'selected'}`} onClick={() => onToggle("ask")}>질문</div>
+                <div className={`asked ${selected==="ask" && 'selected'}`} onClick={() => onToggle("ask")}>답변완료</div>
                 <span className='hr'/>
-                <div className={`answered ${selected==="answer" && 'selected'}`} onClick={() => onToggle("answer")}>답변</div>
+                <div className={`answered ${selected==="answer" && 'selected'}`} onClick={() => onToggle("answer")}>미답변</div>
             </div>
         );
     }

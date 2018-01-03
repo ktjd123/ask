@@ -17,7 +17,6 @@ class Register extends Component {
                     <div className='registerB' onClick={onRegister}>회원가입</div>
                     <Link to='/login' className='cancelB'>취소</Link>
                 </div>
-                주의사항 이용약관 박스 아래에 넣기
             </div>
         );
     }

@@ -9,6 +9,11 @@
 .registerTemplate .registerT{
     margin-top: 15vh;
 }
+.registerTemplate .dis{
+    margin-top: 1rem;
+    margin-bottom: -3rem;
+    color: gray;
+}
 
 @media (max-height: 500px){
     .registerTemplate .registerT{
