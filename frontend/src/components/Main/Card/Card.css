@@ -1,5 +1,6 @@
 .card{
-    width: 80vw;
+    position: relative;
+    width: 90vw;
     min-height: 250px;
     background: white;
     display: flex;
@@ -54,9 +55,60 @@
     padding: 2vw;
     min-height: 50px;
     margin-top: 20px;
-    background: #e9ecef;
+    background: #f1f3f5;
+    border: 1px solid #eee;
     border-radius: 5px;
 }
+
+.card .main .awCon{
+    display: flex;
+    width: 90%;
+}
+
+.card .main .awCon .awI{
+    position: relative;
+    flex-grow: 9;
+    padding: 2vw;
+    font-size: 1rem;
+    height: 80px;
+    background: #f1f3f5;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    resize: none;
+}
+
+.card .main .awCon .count{
+    position: absolute;
+    font-size: 1rem;
+    bottom: 70px;
+    right: 45%;
+    color: gray;
+}
+
+.card .main .awCon .submit{
+    flex-grow: 9;
+    padding: 2vw;
+    height: 80px;
+    cursor: pointer;
+    background: #8ce99a;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: bolder;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 4%;
+}
+
+.card .main .awCon .submit:hover{
+    filter: brightness(105%);
+}
+.card .main .awcon .submit:active{
+    filter: brightness(95%);
+}
+
 
 .card .add{
     height: 40px;
@@ -69,4 +121,13 @@
 .card .add .amout{
     margin-bottom: 3px;
     margin-left: 0.5rem;
+}
+
+@media (max-width: 800px){
+    .card .main .awCon .count{
+        position: absolute;
+        font-size: 1rem;
+        bottom: 70px;
+        right: 35%;
+    }
 }

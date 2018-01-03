@@ -4,14 +4,29 @@ import './Card.css'
 class Card extends Component {
 
     shouldComponentUpdate(nextProps, nextState) {
-        if(this.props.data === nextProps.data){
+        if (this.props.data === nextProps.data && this.props.awI === nextProps.awI) {
             return false
         }
         return true
     }
-    
+
     render() {
-        const {data} = this.props
+        const { data, awI, awICount, onChange } = this.props
+        let answer = undefined
+        if (!typeof data.answer === "undefined") {
+            answer = (
+                <div className='aw'>{data.answer}</div>
+            )
+        } else {
+            answer = (
+                <div className='awCon'>
+                    <textarea className='awI' value={awI} onChange={onChange}>
+                    </textarea>
+                    <div className='count'>{awICount}/300</div>
+                    <div className='submit'>완료</div>
+                </div>
+            )
+        }
         return (
             <div className='card'>
                 <div className='info'>
@@ -20,7 +35,7 @@ class Card extends Component {
                 </div>
                 <div className='main'>
                     <div className='qs'>{data.question}</div>
-                    <div className='aw'>{data.answer}</div>
+                    {answer}
                 </div>
                 <div className='add'>
                     <a><i className='material-icons'>star_border</i></a>

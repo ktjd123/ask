@@ -11,8 +11,11 @@ const Post = new Schema({
     time: {type: Date, default: Date.now}
 })
 
-Post.statics.posts = function (replier) {
-    return this.find({"replier": replier}, {"question": true, "answer": true, "replier": true, "time": true}).sort({"_id": -1}).exec()
+Post.statics.answered = function (replier) {
+    return this.find({$and: [{"replier": replier}, {"replied": true}]}, {"question": true, "answer": true, "replier": true, "time": true}).sort({"_id": -1}).exec()
+}
+Post.statics.nonAnswered = function (replier) {
+    return this.find({$and: [{"replier": replier}, {"replied": false}]}, {"question": true, "answer": true, "replier": true, "time": true}).sort({"_id": -1}).exec()
 }
 
 export default mongoose.model('Post', Post)

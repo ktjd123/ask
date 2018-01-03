@@ -12,8 +12,11 @@ class Main extends Component {
         name: '',
         input: '',
         count: 0,
+        awI: '',
+        awICount: 0,
         selected: 'ask',
-        posts: []
+        posts: [],
+        nPosts: []
     }
 
     componentWillMount() {
@@ -39,11 +42,20 @@ class Main extends Component {
     }
     componentDidMount() {
         const id = this.props.match.params.id
-        this.props.getPostRequest(id).then(() => {
+        this.props.getPostRequest(id, true).then(() => {
             if(this.props.postStatus.status === "SUCCESS"){
-                console.log(this.props.postStatus.data)
                 this.setState({
                     posts: this.props.postStatus.data
+                })
+            }else{
+                toast.error('다시 시도해주세요')
+            }
+        })
+
+        this.props.getPostRequest(id, false).then(() => {
+            if(this.props.postStatus.status === "SUCCESS"){
+                this.setState({
+                    nPosts: this.props.postStatus.nData
                 })
             }else{
                 toast.error('다시 시도해주세요')
@@ -55,10 +67,17 @@ class Main extends Component {
 
     handleChange = (e) => {
         let count = e.target.value.length
-        this.setState({
-            input: e.target.value,
-            count: count
-        })
+        if(e.target.className==='awI'){
+            this.setState({
+                awI: e.target.value,
+                awICount: count
+            })
+        }else{
+            this.setState({
+                input: e.target.value,
+                count: count
+            })
+        }
     }
 
     handleToggle = (ask) => {
@@ -68,7 +87,10 @@ class Main extends Component {
     }
 
     render() {
-        const {input, count, selected, name, posts} = this.state
+        let {input, count, awI, awICount, selected, name, posts, nPosts} = this.state
+        if(selected !== 'ask'){
+            posts = nPosts
+        }
         const {
             handleChange,
             handleToggle
@@ -88,6 +110,8 @@ class Main extends Component {
                 selected={selected}
                 posts={posts}
                 CardList={CardList}
+                awI = {awI}
+                awICount={awICount}
                 />
             </div>
         );
@@ -110,8 +134,8 @@ const mapDispatchToProps = dispatch => {
         getInfoRequest: (id) => {
             return dispatch(getInfoRequest(id))
         },
-        getPostRequest: (id) => {
-            return dispatch(getPostRequest(id))
+        getPostRequest: (id, aw) => {
+            return dispatch(getPostRequest(id, aw))
         }
     }
 }

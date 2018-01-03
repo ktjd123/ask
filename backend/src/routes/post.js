@@ -147,11 +147,21 @@ router.post('/id', (req, res) => {
         }
         _id = user._id
 
-        Post.posts(_id).then(posts => {
-            return res.json(posts)
-        }).catch(err => {
-            throw err
-        })
+        if (req.body.aw === true) {
+            Post.answered(_id).then(posts => {
+                return res.json(posts)
+            }).catch(err => {
+                throw err
+            })
+        } else {
+            Post.nonAnswered(_id).then(posts => {
+                return res.json(posts)
+            }).catch(err => {
+                throw err
+            })
+        }
+
+
     })
 })
 
