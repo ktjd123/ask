@@ -37,6 +37,7 @@
 
 .header .right {
     flex-grow: 1;
+    width: 0;
 }
 
 .header .right .loginB{
