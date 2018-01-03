@@ -3,31 +3,32 @@ import './Card.css'
 
 class Card extends Component {
 
-    shouldComponentUpdate(nextProps, nextState) {
-        if (this.props.data === nextProps.data && this.props.awI === nextProps.awI) {
-            return false
-        }
-        return true
-    }
 
     render() {
-        const { data, awI, awICount, onChange } = this.props
+        const { data, awI, awICount, onChange, isMine } = this.props
         let answer = undefined
-        let remove = (
-            <div className='remove'>삭제</div>
-        )
-        if (!typeof data.answer === "undefined") {
+        let remove = undefined
+        if (!isMine) {
             answer = (
                 <div className='aw'>{data.answer}</div>
             )
         } else {
-            answer = (
-                <div className='awCon'>
-                    <textarea className='awI' value={awI} onChange={onChange}>
-                    </textarea>
-                    <div className='count'>{awICount}/300</div>
-                    <div className='submit'>완료</div>
-                </div>
+            if(typeof data.answer === 'undefined'){
+                answer = (
+                    <div className='awCon'>
+                        <textarea className='awI' value={awI} onChange={onChange}>
+                        </textarea>
+                        <div className='count'>{awICount}/300</div>
+                        <div className='submit'>완료</div>
+                    </div>
+                )
+            }else{
+                answer = (
+                    <div className='aw'>{data.answer}</div>
+                )
+            }
+            remove = (
+                <div className='remove'>삭제</div>
             )
         }
         return (

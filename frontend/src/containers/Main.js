@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {MainTemplate, Ask, Menu, Profile, CardList} from 'components'
 import {getStatusRequest} from 'actions/authentication'
 import {getInfoRequest} from 'actions/info'
-import {getPostRequest} from 'actions/post'
+import {getPostRequest, postQuestionRequest} from 'actions/post'
 import {toast} from 'react-toastify'
 import {connect} from 'react-redux'
 
@@ -10,6 +10,7 @@ class Main extends Component {
 
     state = {
         name: '',
+        isMine: false,
         input: '',
         count: 0,
         awI: '',
@@ -41,6 +42,15 @@ class Main extends Component {
         })
     }
     componentDidMount() {
+        this.fetchPosts()
+        if(this.props.match.params.id === this.props.mainStatus.currentUser){
+            this.setState({
+                isMine: true
+            })
+        }
+    }
+
+    fetchPosts = () => {
         const id = this.props.match.params.id
         this.props.getPostRequest(id, true).then(() => {
             if(this.props.postStatus.status === "SUCCESS"){
@@ -85,22 +95,41 @@ class Main extends Component {
         })
     }
 
+    handlePostQuestion = () => {
+        const {input} = this.state
+        const replier = this.props.match.params.id
+        this.props.postQuestionRequest(replier, input).then(() => {
+            if(this.props.questionStatus.status === "SUCCESS"){
+                this.setState({
+                    input: ''
+                })
+                toast.success('질문 했습니다!')
+                this.fetchPosts()
+            }else{
+                toast.error(this.props.questionStatus.error)
+            }
+        })
+    }
+
     render() {
-        let {input, count, awI, awICount, selected, name, posts, nPosts} = this.state
+        let {input, count, awI, awICount, selected, name, posts, nPosts, isMine} = this.state
         if(selected !== 'ask'){
             posts = nPosts
         }
         const {
             handleChange,
-            handleToggle
+            handleToggle,
+            handlePostQuestion
         } = this
 
         return (
             <div>
                 <MainTemplate
                 Profile={Profile}
+                isMine={isMine}
                 name={name}
                 Ask={Ask}
+                onQuestion = {handlePostQuestion}
                 Menu={Menu} 
                 value={input} 
                 onChange={handleChange} 
@@ -121,7 +150,8 @@ const mapStateToProps = state => {
     return {
         mainStatus: state.authentication.status,
         infoStatus: state.authentication.info,
-        postStatus: state.post.list
+        postStatus: state.post.list,
+        questionStatus: state.post.postQuestion
     }
 }
 
@@ -135,6 +165,9 @@ const mapDispatchToProps = dispatch => {
         },
         getPostRequest: (id, aw) => {
             return dispatch(getPostRequest(id, aw))
+        },
+        postQuestionRequest: (replier, question) => {
+            return dispatch(postQuestionRequest(replier, question))
         }
     }
 }

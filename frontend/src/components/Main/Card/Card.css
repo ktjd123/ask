@@ -123,7 +123,7 @@
 .card .main .awCon .submit:hover{
     filter: brightness(105%);
 }
-.card .main .awcon .submit:active{
+.card .main .awCon .submit:active{
     filter: brightness(95%);
 }
 
