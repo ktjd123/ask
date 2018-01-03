@@ -14,29 +14,9 @@ class Register extends Component {
     }
 
     componentWillMount() {
-        function getCookie(name) {
-            let value = "; "+ document.cookie
-            let parts = value.split("; " + name + "=")
-            if(parts.length === 2) return parts.pop().split(';').shift();
-        }
-        let loginData = getCookie("key")
-        if(typeof loginData === "undefined") return;
-        loginData = JSON.parse(atob(loginData))
-        if(!loginData.isLoggedIn) return;
-
         this.props.getStatusRequest().then(() => {
             if(this.props.mainStatus.valid){
-                let loginData = {
-                    isLoggedIn: true,
-                    id: this.props.status.currentUser,
-                    name: this.props.status.currentName
-                }
-                let date = new Date()
-                date.setTime(date.getTime() + ( 365 * 24 * 60 * 60 * 1000))
-                let expires = ";expires=" + date.toGMTString()
-                let cookie = "key=" + btoa(JSON.stringify(loginData))+expires
-                document.cookie = cookie
-                this.props.history.push('/' + this.props.mainStatus.currentUser)
+                this.props.history.push('/')
                 return
             }
         })
@@ -55,7 +35,7 @@ class Register extends Component {
             break
 
             case 'name':
-            if(e.target.value.length > 30) break
+            if(e.target.value.length > 5) break
             this.setState({name: e.target.value})
             break
 
@@ -71,6 +51,10 @@ class Register extends Component {
     handleRegister = () => {
         const {id, pw, name, email} = this.state
         const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        if(id === "" || pw ===""||name===""||email===""){
+            toast.error("모든 칸을 채워주세요")
+            return
+        }
         if(!emailRegex.test(email)) {
             toast.error('이메일을 확인해주세요')
             return
