@@ -53,7 +53,7 @@ app.get('*', (req,res)=> {
 })
 
 
-let port = 4000;
+let port = 80;
 app.listen(port, () => {
     console.log('Express is running on port', port);
 });
