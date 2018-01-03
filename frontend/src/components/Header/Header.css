@@ -11,12 +11,12 @@
     justify-content: center;
     text-align: center;
     z-index: 3;
+    font-weight: 600;
 }
 
 .header .left{
     flex-grow: 1;
     color: white;
-    font-weight: 600;
     width: 0;
 }
 
@@ -37,4 +37,11 @@
 
 .header .right {
     flex-grow: 1;
+}
+
+.header .right .loginB{
+    color: white;
+}
+.header .right .loginB:active{
+    color: white;
 }

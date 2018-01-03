@@ -131,7 +131,8 @@ class Main extends Component {
         this.props.postAnswerRequest(id, awI).then(() => {
             if(this.props.answerStatus.status === "SUCCESS"){
                 this.setState({
-                    awI: ''
+                    awI: '',
+                    awICount: 0
                 })
                 toast.success('답변 했습니다!')
                 this.fetchPosts()

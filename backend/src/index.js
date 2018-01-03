@@ -54,7 +54,7 @@ app.get('*', (req,res)=> {
 
 let port = undefined
 
-if(!process.env.NODE_ENV==="development"){
+if(process.env.NODE_ENV==="development"){
     port = 4000
 }else{
     port = 80

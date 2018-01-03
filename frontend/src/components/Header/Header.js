@@ -18,7 +18,7 @@ const Header = () => {
             </div>
             <Link to='/' className='logo'>ASKED</Link>
             <div className="right">
-
+                <Link to='/' className="loginB">로그인</Link>
             </div>
         </div>
     );
