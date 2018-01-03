@@ -4,7 +4,7 @@ import './CardList.css'
 
 class CardList extends Component {
     render() {
-        const {posts, awI, awICount, onChange, isMine} = this.props
+        const {posts, awI, awICount, onChange, isMine, onAnswer} = this.props
         return posts.map(posts => {
             return (
                 <Card 
@@ -14,6 +14,7 @@ class CardList extends Component {
                 key = {posts._id}
                 onChange={onChange}
                 isMine={isMine}
+                onAnswer ={onAnswer}
                 />
             )
         })

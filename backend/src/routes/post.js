@@ -49,58 +49,58 @@ router.post('/', (req, res) => {
     }).catch(err => { throw err })
 })
 
-router.put('/:id', (req, res) => {
-    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-        return res.status(400).json({
-            code: 0
-        })
-    }
+router.post('/reply', (req, res) => {
     const schema = Joi.object().keys({
-        reply: Joi.string().min(1).max(300).required()
+        _id: Joi.string().required(),
+        answer: Joi.string().min(1).max(300).required()
     })
-    const result = Joi.validate({ reply: req.body.reply }, schema)
+    const result = Joi.validate({_id: req.body.id, answer: req.body.answer }, schema)
 
-    if (result.error) {
+    if(result.error){
         return res.status(400).json({
             code: 0
         })
     }
 
-    if (typeof req.session.loginInfo === "undefined") {
+    if(typeof req.session.loginInfo === "undefined"){
         return res.status(403).json({
             code: 1
         })
     }
 
-    Post.findById(req.params.id).exec().then(post => {
-        if (!post) {
+    Post.findOne({"_id": req.body.id}).exec().then(post => {
+        if(!post){
             return res.status(404).json({
                 code: 2
             })
         }
-
-        if (post.replier != req.session.loginInfo._id) {
+        if(post.replier != req.session.loginInfo._id){
             return res.status(403).json({
                 code: 3
             })
         }
-
-        post.answer = req.body.reply;
+        post.answer = req.body.answer
         post.replied = true
 
-        post.save((err, post) => {
-            if (err) throw err;
+        post.save((err, post)=> {
+            if(err) throw err
             return res.json({
-                success: true,
-                post
+                success: true
             })
         })
-
-    }).catch(err => { throw err })
+    }).catch(err => {
+        throw err
+    })
 })
 
-router.delete('/:id', (req, res) => {
-    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+router.post('/remove', (req, res) => {
+    
+    const schema = Joi.object().keys({
+        id: Joi.string().required()
+    })
+
+    const result = Joi.validate({id: req.body.id}, schema)
+    if(result.error){
         return res.status(400).json({
             code: 0
         })
@@ -110,7 +110,8 @@ router.delete('/:id', (req, res) => {
             code: 1
         })
     }
-    Post.findById(req.params.id).exec().then(post => {
+
+    Post.findById(req.body.id).exec().then(post => {
         if (!post) {
             return res.status(404).json({
                 code: 2

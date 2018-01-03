@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {MainTemplate, Ask, Menu, Profile, CardList} from 'components'
 import {getStatusRequest} from 'actions/authentication'
 import {getInfoRequest} from 'actions/info'
-import {getPostRequest, postQuestionRequest} from 'actions/post'
+import {getPostRequest, postQuestionRequest, postAnswerRequest} from 'actions/post'
 import {toast} from 'react-toastify'
 import {connect} from 'react-redux'
 
@@ -23,6 +23,11 @@ class Main extends Component {
     componentWillMount() {
         this.props.getStatusRequest().then(() => {
             if(this.props.mainStatus.valid){
+                if(this.props.match.params.id === this.props.mainStatus.currentUser){
+                    this.setState({
+                        isMine: true
+                    })
+                }
                 return
             }else{
                 toast.error('로그인을 한 후에 질문, 답변을 확인할 수 있습니다.')
@@ -43,11 +48,6 @@ class Main extends Component {
     }
     componentDidMount() {
         this.fetchPosts()
-        if(this.props.match.params.id === this.props.mainStatus.currentUser){
-            this.setState({
-                isMine: true
-            })
-        }
     }
 
     fetchPosts = () => {
@@ -98,6 +98,10 @@ class Main extends Component {
     handlePostQuestion = () => {
         const {input} = this.state
         const replier = this.props.match.params.id
+        if(input.length < 1){
+            toast.error('내용을 입력해주세요')
+            return
+        }
         this.props.postQuestionRequest(replier, input).then(() => {
             if(this.props.questionStatus.status === "SUCCESS"){
                 this.setState({
@@ -105,8 +109,24 @@ class Main extends Component {
                 })
                 toast.success('질문 했습니다!')
                 this.fetchPosts()
+            }
+        })
+    }
+
+    handlePostAnswer = (id) => {
+        const {awI, awICount} = this.state
+        if(awICount < 1){
+            toast.error('내용을 입력해주세요!')
+        }
+        this.props.postAnswerRequest(id, awI).then(() => {
+            if(this.props.answerStatus.status === "SUCCESS"){
+                this.setState({
+                    awI: ''
+                })
+                toast.success('답변 했습니다!')
+                this.fetchPosts()
             }else{
-                toast.error(this.props.questionStatus.error)
+                toast.error(this.props.answerStatus.error)
             }
         })
     }
@@ -119,7 +139,8 @@ class Main extends Component {
         const {
             handleChange,
             handleToggle,
-            handlePostQuestion
+            handlePostQuestion,
+            handlePostAnswer
         } = this
 
         return (
@@ -140,6 +161,7 @@ class Main extends Component {
                 CardList={CardList}
                 awI = {awI}
                 awICount={awICount}
+                onAnswer = {handlePostAnswer}
                 />
             </div>
         );
@@ -151,7 +173,8 @@ const mapStateToProps = state => {
         mainStatus: state.authentication.status,
         infoStatus: state.authentication.info,
         postStatus: state.post.list,
-        questionStatus: state.post.postQuestion
+        questionStatus: state.post.postQuestion,
+        answerStatus: state.post.postAnswer
     }
 }
 
@@ -168,6 +191,9 @@ const mapDispatchToProps = dispatch => {
         },
         postQuestionRequest: (replier, question) => {
             return dispatch(postQuestionRequest(replier, question))
+        },
+        postAnswerRequest: (id, answer) => {
+            return dispatch(postAnswerRequest(id, answer))
         }
     }
 }

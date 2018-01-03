@@ -35,6 +35,7 @@
     font-size: 2rem;
     color: white;
     padding: 10px 30px 10px 30px;
+    border: 1px solid #EEE;
     background: #8ce99a;
     border-radius: 10px;
 }

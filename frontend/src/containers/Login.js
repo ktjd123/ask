@@ -40,7 +40,7 @@ class Login extends Component {
         const {id, pw} = this.state
         this.props.loginRequest(id, pw).then(() => {
             if(this.props.status === 'SUCCESS') {
-                toast.success('로그인 완료!')
+                toast.success('SNS에 공유하고 질문을 받아보세요!')
 
                 // todo 추후 메인 페이지 또는 로그인 전 페이지로 변경
                 this.props.history.push('/'+this.props.mainStatus.currentUser)

@@ -5,7 +5,13 @@ import{
     GET_NPOST_SUCCESS,
     POST_QUESTION,
     POST_QUESTION_SUCCESS,
-    POST_QUESTION_FAILURE
+    POST_QUESTION_FAILURE,
+    POST_ANSWER,
+    POST_ANSWER_SUCCESS,
+    POST_ANSWER_FAILURE,
+    POST_REMOVE,
+    POST_REMOVE_SUCCESS,
+    POST_REMOVE_FAILURE
 } from '../actions/ActionTypes'
 import update from 'react-addons-update'
 
@@ -16,6 +22,14 @@ const initialState = {
         nData: []
     },
     postQuestion: {
+        status: 'INIT',
+        error: -1
+    },
+    postAnswer: {
+        status: 'INIT',
+        error: -1
+    },
+    postRemove: {
         status: 'INIT',
         error: -1
     }
@@ -70,6 +84,50 @@ export default function post(state = initialState, action){
         case POST_QUESTION_FAILURE:
         return update(state, {
             postQuestion: {
+                status: {$set: 'FAILURE'},
+                error: {$set: action.code}
+            }
+        })
+
+        case POST_ANSWER:
+        return update(state, {
+            postAnswer: {
+                status: {$set: 'PENDING'}
+            }
+        })
+
+        case POST_ANSWER_SUCCESS:
+        return update(state, {
+            postAnswer: {
+                status: {$set: 'SUCCESS'}
+            }
+        })
+
+        case POST_ANSWER_FAILURE:
+        return update(state, {
+            postAnswer: {
+                status: {$set: 'FAILURE'},
+                error: {$set: action.code}
+            }
+        })
+        
+        case POST_REMOVE:
+        return update(state, {
+            postRemove: {
+                status: {$set: 'PENDING'}
+            }
+        })
+
+        case POST_REMOVE_SUCCESS:
+        return update(state, {
+            postRemove: {
+                status: {$set: 'SUCCESS'}
+            }
+        })
+
+        case POST_REMOVE_FAILURE:
+        return update(state, {
+            postRemove: {
                 status: {$set: 'FAILURE'},
                 error: {$set: action.code}
             }

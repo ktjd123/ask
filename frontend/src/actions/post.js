@@ -5,9 +5,77 @@ import {
     GET_NPOST_SUCCESS,
     POST_QUESTION,
     POST_QUESTION_SUCCESS,
-    POST_QUESTION_FAILURE
+    POST_QUESTION_FAILURE,
+    POST_ANSWER,
+    POST_ANSWER_SUCCESS,
+    POST_ANSWER_FAILURE,
+    POST_REMOVE,
+    POST_REMOVE_SUCCESS,
+    POST_REMOVE_FAILURE
 } from './ActionTypes'
 import axios from 'axios'
+
+
+export function postRemoveRequest(id){
+    return dispatch => {
+        dispatch(postRemove())
+        return axios.post('/api/post/remove', {id}).then(res => {
+            dispatch(postRemoveSuccess())
+        }).catch(err => {
+            dispatch(postRemoveFailure(err.response.data.code))
+        })
+    }
+}
+
+export function postRemove(){
+    return {
+        type: POST_REMOVE
+    }
+}
+
+export function postRemoveSuccess(){
+    return {
+        type: POST_REMOVE_SUCCESS
+    }
+}
+
+export function postRemoveFailure(code){
+    return {
+        type: POST_REMOVE_FAILURE
+        ,code
+    }
+}
+
+export function postAnswerRequest(id, answer){
+    return dispatch => {
+        dispatch(postAnswer())
+
+        return axios.post('/api/post/reply', {id,answer}).then(res => {
+            dispatch(postAnswerSuccess())
+        }).catch(err => {
+            dispatch(postAnswerFailure(err.response.data.code))
+        })
+    }
+}
+
+export function postAnswer(){
+    return {
+        type: POST_ANSWER
+    }
+}
+
+export function postAnswerSuccess(){
+    return {
+        type: POST_ANSWER_SUCCESS
+    }
+}
+
+export function postAnswerFailure(code){
+    return{
+        type: POST_ANSWER_FAILURE,
+        code
+    }
+}
 
 export function postQuestionRequest(replier, question){
     return dispatch => {

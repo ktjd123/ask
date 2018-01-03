@@ -3,9 +3,16 @@ import './Card.css'
 
 class Card extends Component {
 
+    shouldComponentUpdate(nextProps, nextState) {
+        if(this.props !== nextProps){
+            return true
+        }
+        return false
+    }
+    
 
     render() {
-        const { data, awI, awICount, onChange, isMine } = this.props
+        const { data, awI, awICount, onChange, isMine, onAnswer} = this.props
         let answer = undefined
         let remove = undefined
         if (!isMine) {
@@ -19,7 +26,7 @@ class Card extends Component {
                         <textarea className='awI' value={awI} onChange={onChange}>
                         </textarea>
                         <div className='count'>{awICount}/300</div>
-                        <div className='submit'>완료</div>
+                        <div className='submit' onClick={() => onAnswer(data._id)}>완료</div>
                     </div>
                 )
             }else{
