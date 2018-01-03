@@ -54,10 +54,10 @@ app.get('*', (req,res)=> {
 
 let port = undefined
 
-if(process.env.NODE_ENV==='production'){
-    port = 80
-}else{
+if(!process.env.NODE_ENV==="development"){
     port = 4000
+}else{
+    port = 80
 }
 app.listen(port, () => {
     console.log('Express is running on port', port);
