@@ -20,6 +20,13 @@
     width: 0;
 }
 
+.header .left .my{
+    color: white;
+}
+.header .left .my:visited{
+    color: white;
+}
+
 .header .logo{
     flex-grow: 1;
     color: white;

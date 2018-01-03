@@ -3,21 +3,19 @@ import './Menu.css'
 
 class Menu extends React.Component {
 
-    shouldComponentUpdate(nextProps, nextState) {
-        if(nextProps.selected !== this.props.selected){
-            return true
-        }
-        return false
-    }
-    
-
     render() {
-        const {onToggle, selected} = this.props
+        const { onToggle, selected, postCount, nPostCount } = this.props
         return (
             <div className='menu'>
-                <div className={`asked ${selected==="ask" && 'selected'}`} onClick={() => onToggle("ask")}>답변완료</div>
-                <span className='hr'/>
-                <div className={`answered ${selected==="answer" && 'selected'}`} onClick={() => onToggle("answer")}>미답변</div>
+                <div className='con' onClick={() => onToggle("ask")}>
+                    <div className='count'>{postCount}</div>
+                    <div className={`asked ${selected === "ask" && 'selected'}`} >답변완료</div>
+                </div>
+                <span className='hr' />
+                <div className='con'  onClick={() => onToggle("answer")}>
+                    <div className='count'>{nPostCount}</div>
+                    <div className={`answered ${selected === "answer" && 'selected'}`}>미답변</div>
+                </div>
             </div>
         );
     }

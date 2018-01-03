@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 import {MainTemplate, Ask, Menu, Profile, CardList} from 'components'
 import {getStatusRequest} from 'actions/authentication'
 import {getInfoRequest} from 'actions/info'
-import {getPostRequest, postQuestionRequest, postAnswerRequest, postRemoveRequest} from 'actions/post'
+import {
+    getPostRequest, 
+    postQuestionRequest, 
+    postAnswerRequest, 
+    postRemoveRequest
+} from 'actions/post'
 import {toast} from 'react-toastify'
 import {connect} from 'react-redux'
 
@@ -11,27 +16,30 @@ class Main extends Component {
     state = {
         name: '',
         isMine: false,
+        loggedIn: false,
         input: '',
         count: 0,
         awI: '',
         awICount: 0,
         selected: 'ask',
         posts: [],
-        nPosts: []
+        nPosts: [],
+        postCount: 0,
+        nPostCount: 0
     }
 
     componentWillMount() {
         this.props.getStatusRequest().then(() => {
             if(this.props.mainStatus.valid){
+                this.setState({
+                    loggedIn: true
+                })
                 if(this.props.match.params.id === this.props.mainStatus.currentUser){
                     this.setState({
                         isMine: true
                     })
                 }
                 return
-            }else{
-                toast.error('로그인을 한 후에 질문, 답변을 확인할 수 있습니다.')
-                this.props.history.push('/login')
             }
         })
         const id = this.props.match.params.id
@@ -55,7 +63,8 @@ class Main extends Component {
         this.props.getPostRequest(id, true).then(() => {
             if(this.props.postStatus.status === "SUCCESS"){
                 this.setState({
-                    posts: this.props.postStatus.data
+                    posts: this.props.postStatus.data,
+                    postCount: this.props.postStatus.data.length
                 })
             }
         })
@@ -63,7 +72,8 @@ class Main extends Component {
         this.props.getPostRequest(id, false).then(() => {
             if(this.props.postStatus.status === "SUCCESS"){
                 this.setState({
-                    nPosts: this.props.postStatus.nData
+                    nPosts: this.props.postStatus.nData,
+                    nPostCount: this.props.postStatus.nData.length
                 })
             }
         })
@@ -96,13 +106,13 @@ class Main extends Component {
     }
 
     handlePostQuestion = () => {
-        const {input} = this.state
+        const {input, loggedIn} = this.state
         const replier = this.props.match.params.id
         if(input.length < 1){
             toast.error('내용을 입력해주세요')
             return
         }
-        this.props.postQuestionRequest(replier, input).then(() => {
+        this.props.postQuestionRequest(replier, input, loggedIn).then(() => {
             if(this.props.questionStatus.status === "SUCCESS"){
                 this.setState({
                     input: ''
@@ -141,7 +151,19 @@ class Main extends Component {
     }
 
     render() {
-        let {input, count, awI, awICount, selected, name, posts, nPosts, isMine} = this.state
+        let {
+            input, 
+            count, 
+            awI, 
+            awICount, 
+            selected, 
+            name, 
+            posts, 
+            nPosts, 
+            isMine,
+            postCount,
+            nPostCount
+        } = this.state
         if(selected !== 'ask'){
             posts = nPosts
         }
@@ -173,6 +195,8 @@ class Main extends Component {
                 awICount={awICount}
                 onAnswer = {handlePostAnswer}
                 handleRemove={handleRemove}
+                postCount={postCount}
+                nPostCount={nPostCount}
                 />
             </div>
         );
@@ -201,8 +225,8 @@ const mapDispatchToProps = dispatch => {
         getPostRequest: (id, aw) => {
             return dispatch(getPostRequest(id, aw))
         },
-        postQuestionRequest: (replier, question) => {
-            return dispatch(postQuestionRequest(replier, question))
+        postQuestionRequest: (replier, question, loggedIn) => {
+            return dispatch(postQuestionRequest(replier, question, loggedIn))
         },
         postAnswerRequest: (id, answer) => {
             return dispatch(postAnswerRequest(id, answer))

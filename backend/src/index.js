@@ -36,11 +36,11 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     cookie: {
-        maxAge: 365 * 24 * 60 * 60 * 1000
+        maxAge: 30 * 24 * 60 * 60 * 1000
     },
     store: new MongoStore({
        mongooseConnection: mongoose.connection,
-        ttl: 365 * 24 * 60 * 60
+        ttl: 30 * 24 * 60 * 60
     })
 }))
 
@@ -52,8 +52,13 @@ app.get('*', (req,res)=> {
     res.sendFile(path.resolve(__dirname, "..", "frontend", "index.html"))
 })
 
+let port = undefined
 
-let port = 80;
+if(process.env.NODE_ENV==='production'){
+    port = 80
+}else{
+    port = 4000
+}
 app.listen(port, () => {
     console.log('Express is running on port', port);
 });

@@ -10,22 +10,17 @@ router.post('/', (req, res) => {
     const body = req.body
 
     const schema = Joi.object().keys({
-        replier: Joi.string().min(3).max(10).required(),
         question: Joi.string().min(1).max(300).required()
     })
 
-    const result = Joi.validate({ replier: body.replier, question: body.question }, schema)
+    const result = Joi.validate({ question: body.question }, schema)
     if (result.error) {
         return res.status(400).json({
             code: 0
         })
     }
 
-    if (typeof req.session.loginInfo === "undefined") {
-        return res.status(403).json({
-            code: 1
-        })
-    }
+
 
 
     Account.findId(req.body.replier).then(user => {
@@ -36,10 +31,13 @@ router.post('/', (req, res) => {
         }
 
         let post = new Post({
-            asker: req.session.loginInfo._id,
             replier: user._id,
             question: body.question
         })
+
+        if (!typeof req.session.loginInfo === "undefined") {
+            post.asker = req.session.loginInfo._id
+        }
 
         post.save(err => {
             if (err) throw err;
@@ -54,27 +52,27 @@ router.post('/reply', (req, res) => {
         _id: Joi.string().required(),
         answer: Joi.string().min(1).max(300).required()
     })
-    const result = Joi.validate({_id: req.body.id, answer: req.body.answer }, schema)
+    const result = Joi.validate({ _id: req.body.id, answer: req.body.answer }, schema)
 
-    if(result.error){
+    if (result.error) {
         return res.status(400).json({
             code: 0
         })
     }
 
-    if(typeof req.session.loginInfo === "undefined"){
+    if (typeof req.session.loginInfo === "undefined") {
         return res.status(403).json({
             code: 1
         })
     }
 
-    Post.findOne({"_id": req.body.id}).exec().then(post => {
-        if(!post){
+    Post.findOne({ "_id": req.body.id }).exec().then(post => {
+        if (!post) {
             return res.status(404).json({
                 code: 2
             })
         }
-        if(post.replier != req.session.loginInfo._id){
+        if (post.replier != req.session.loginInfo._id) {
             return res.status(403).json({
                 code: 3
             })
@@ -82,8 +80,8 @@ router.post('/reply', (req, res) => {
         post.answer = req.body.answer
         post.replied = true
 
-        post.save((err, post)=> {
-            if(err) throw err
+        post.save((err, post) => {
+            if (err) throw err
             return res.json({
                 success: true
             })
@@ -94,13 +92,13 @@ router.post('/reply', (req, res) => {
 })
 
 router.post('/remove', (req, res) => {
-    
+
     const schema = Joi.object().keys({
         id: Joi.string().required()
     })
 
-    const result = Joi.validate({id: req.body.id}, schema)
-    if(result.error){
+    const result = Joi.validate({ id: req.body.id }, schema)
+    if (result.error) {
         return res.status(400).json({
             code: 0
         })
@@ -165,5 +163,6 @@ router.post('/id', (req, res) => {
 
     })
 })
+
 
 export default router

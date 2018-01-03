@@ -11,10 +11,9 @@ import {
     POST_ANSWER_FAILURE,
     POST_REMOVE,
     POST_REMOVE_SUCCESS,
-    POST_REMOVE_FAILURE
+    POST_REMOVE_FAILURE,
 } from './ActionTypes'
 import axios from 'axios'
-
 
 export function postRemoveRequest(id){
     return dispatch => {
@@ -77,11 +76,11 @@ export function postAnswerFailure(code){
     }
 }
 
-export function postQuestionRequest(replier, question){
+export function postQuestionRequest(replier, question, loggedIn){
     return dispatch => {
         dispatch(postQuestion())
 
-        return axios.post('/api/post/', {replier, question}).then(res => {
+        return axios.post('/api/post/', {replier, question, loggedIn}).then(res => {
             dispatch(postQuestionSuccess())
         }).catch( err => {
             dispatch(postQuestionFailure(err.response.data.code))

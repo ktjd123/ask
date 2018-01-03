@@ -6,7 +6,7 @@ const Header = () => {
 
     const loginRegex = /(login|register)/
     let leftButton = (
-        <Link to="/login">내 애스크</Link>
+        <Link to="/login" className='my'>내 애스크</Link>
     )
     if(loginRegex.test(window.location.href)){
         leftButton = undefined

@@ -11,7 +11,7 @@ import{
     POST_ANSWER_FAILURE,
     POST_REMOVE,
     POST_REMOVE_SUCCESS,
-    POST_REMOVE_FAILURE
+    POST_REMOVE_FAILURE,
 } from '../actions/ActionTypes'
 import update from 'react-addons-update'
 
@@ -31,6 +31,12 @@ const initialState = {
     },
     postRemove: {
         status: 'INIT',
+        error: -1
+    },
+    postCountStatus: {
+        status: 'INIT',
+        answerCount: 0,
+        nAnswerCount: 0,
         error: -1
     }
 }
