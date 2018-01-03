@@ -24,10 +24,12 @@ class Login extends Component {
 
     handleChange = e => {
         if(e.target.className === 'id'){
+            if(e.target.value.length > 10) return
             this.setState({
                 id: e.target.value
             })
         }else{
+            if(e.target.value.length > 20) return
             this.setState({
                 pw: e.target.value
             })

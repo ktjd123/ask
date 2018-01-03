@@ -10,8 +10,8 @@ class Register extends Component {
                 <div className='input'>
                     <input placeholder="아이디" className='id' value={id} onChange={onChange} />
                     <input placeholder="비밀번호" type="password" className='pw' value={pw} onChange={onChange} />
-                    <input placeholder='이름' className='name' value={name} onChange={onChange} />
-                    <input placeholder="이메일" className='email' value={email} onChange={onChange} />
+                    <input placeholder='이름' type="name" className='name' value={name} onChange={onChange} />
+                    <input placeholder="이메일" type="email" className='email' value={email} onChange={onChange} />
                 </div>
                 <div className='buttonR'>
                     <div className='registerB' onClick={onRegister}>회원가입</div>

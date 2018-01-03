@@ -45,18 +45,22 @@ class Register extends Component {
     handleChange = (e) => {
         switch(e.target.className){
             case 'id':
+            if(e.target.value.length > 10) break
             this.setState({id: e.target.value})
             break
 
             case 'pw':
+            if(e.target.value.length > 20) break
             this.setState({pw: e.target.value})
             break
 
             case 'name':
+            if(e.target.value.length > 30) break
             this.setState({name: e.target.value})
             break
 
             case 'email':
+            if(e.target.value.length > 40) break
             this.setState({email: e.target.value})
             break
 
@@ -66,6 +70,11 @@ class Register extends Component {
     }
     handleRegister = () => {
         const {id, pw, name, email} = this.state
+        const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        if(!emailRegex.test(email)) {
+            toast.error('이메일을 확인해주세요')
+            return
+        }
         this.props.registerRequest(id, pw, name, email).then(() => {
             if(this.props.status === 'SUCCESS'){
                 toast.success('완료됐습니다! 로그인해주세요!')
@@ -73,8 +82,8 @@ class Register extends Component {
             }else{
                 let errorMessage = [
                    "문자, 숫자만 넣어주세요",
-                   '존재하는 아이디입니다.',
-                   '존재하는 이메일입니다.'
+                   '존재하는 아이디입니다',
+                   '존재하는 이메일입니다'
                 ]
                 toast.error(errorMessage[this.props.errorCode])
             }

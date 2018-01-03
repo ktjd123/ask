@@ -13,6 +13,9 @@ class Card extends Component {
     render() {
         const { data, awI, awICount, onChange } = this.props
         let answer = undefined
+        let remove = (
+            <div className='remove'>삭제</div>
+        )
         if (!typeof data.answer === "undefined") {
             answer = (
                 <div className='aw'>{data.answer}</div>
@@ -32,6 +35,7 @@ class Card extends Component {
                 <div className='info'>
                     <div className='who'>익명</div>
                     <div className='time'>1분전 작성</div>
+                    {remove}
                 </div>
                 <div className='main'>
                     <div className='qs'>{data.question}</div>

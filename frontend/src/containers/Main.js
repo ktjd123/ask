@@ -36,7 +36,7 @@ class Main extends Component {
                 })
             }else{
                 toast.error('없는 사용자입니다')
-                this.props.history.push('/'+this.props.mainStatus.currentUser)
+                this.props.history.push('/')
             }
         })
     }
@@ -47,8 +47,6 @@ class Main extends Component {
                 this.setState({
                     posts: this.props.postStatus.data
                 })
-            }else{
-                toast.error('다시 시도해주세요')
             }
         })
 
@@ -57,8 +55,6 @@ class Main extends Component {
                 this.setState({
                     nPosts: this.props.postStatus.nData
                 })
-            }else{
-                toast.error('다시 시도해주세요')
             }
         })
     }
@@ -67,6 +63,9 @@ class Main extends Component {
 
     handleChange = (e) => {
         let count = e.target.value.length
+        if(count > 300){
+            return
+        }
         if(e.target.className==='awI'){
             this.setState({
                 awI: e.target.value,

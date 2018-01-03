@@ -5,6 +5,7 @@ import morgan from 'morgan';
 import mongoose from 'mongoose';
 import connectMongo from 'connect-mongo';
 import session from 'express-session';
+import path from 'path'
 
 import api from './routes';
 
@@ -46,9 +47,9 @@ app.use(session({
 app.use('/api', api);
 
 //client side routing support
-app.use(express.static(__dirname+'/../frontend/'))
+app.use(express.static(path.resolve(__dirname, "..", "frontend")))
 app.get('*', (req,res)=> {
-    res.sendFile(__dirname+'/../frontend/index.html')
+    res.sendFile(path.resolve(__dirname, "..", "frontend", "index.html"))
 })
 
 

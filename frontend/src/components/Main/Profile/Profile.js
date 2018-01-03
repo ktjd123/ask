@@ -9,12 +9,6 @@ import twLogo from './twLogo.svg'
 
 class Profile extends React.Component {
 
-    shouldComponentUpdate(nextProps, nextState) {
-        if(this.props.name === nextProps.name){
-            return false
-        }
-        return true
-    }
 
     copyToClipBoard = () => {
         copy(window.location.href)

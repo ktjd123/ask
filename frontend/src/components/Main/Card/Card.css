@@ -8,6 +8,7 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    transition: all 0.2s;
     box-shadow: 0 3px 3px rgba(0, 0, 0, 0.16);
 }
 
@@ -16,6 +17,7 @@
 }
 
 .card .info{
+    position: relative;
     height: 40px;
     width: 100%;
     border-bottom: 1px solid #eee;
@@ -31,6 +33,22 @@
 
 .card .info .time{
     margin-left: 2rem;
+}
+
+.card .info .remove{
+    position: absolute;
+    right: 15%;
+    background: #f783ac;
+    width: 5rem;
+    height: 30px;
+    border: 1px solid #eee;
+    color: white;
+    font-weight: 700;
+    font-size: 1rem;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .card .main{
