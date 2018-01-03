@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {MainTemplate, Ask, Menu, Profile, CardList} from 'components'
 import {getStatusRequest} from 'actions/authentication'
 import {getInfoRequest} from 'actions/info'
-import {getPostRequest, postQuestionRequest, postAnswerRequest} from 'actions/post'
+import {getPostRequest, postQuestionRequest, postAnswerRequest, postRemoveRequest} from 'actions/post'
 import {toast} from 'react-toastify'
 import {connect} from 'react-redux'
 
@@ -131,6 +131,15 @@ class Main extends Component {
         })
     }
 
+    handleRemove = id => {
+        this.props.postRemoveRequest(id).then(() => {
+            if(this.props.removeStatus.status === "SUCCESS"){
+                toast.success('삭제 했습니다!')
+                this.fetchPosts()
+            }
+        })
+    }
+
     render() {
         let {input, count, awI, awICount, selected, name, posts, nPosts, isMine} = this.state
         if(selected !== 'ask'){
@@ -140,7 +149,8 @@ class Main extends Component {
             handleChange,
             handleToggle,
             handlePostQuestion,
-            handlePostAnswer
+            handlePostAnswer,
+            handleRemove
         } = this
 
         return (
@@ -162,6 +172,7 @@ class Main extends Component {
                 awI = {awI}
                 awICount={awICount}
                 onAnswer = {handlePostAnswer}
+                handleRemove={handleRemove}
                 />
             </div>
         );
@@ -174,7 +185,8 @@ const mapStateToProps = state => {
         infoStatus: state.authentication.info,
         postStatus: state.post.list,
         questionStatus: state.post.postQuestion,
-        answerStatus: state.post.postAnswer
+        answerStatus: state.post.postAnswer,
+        removeStatus: state.post.postRemove
     }
 }
 
@@ -194,6 +206,9 @@ const mapDispatchToProps = dispatch => {
         },
         postAnswerRequest: (id, answer) => {
             return dispatch(postAnswerRequest(id, answer))
+        },
+        postRemoveRequest: (id) => {
+            return dispatch(postRemoveRequest(id))
         }
     }
 }

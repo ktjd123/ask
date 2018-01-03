@@ -49,6 +49,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 }
 
 .card .main{
@@ -136,7 +137,7 @@
     padding-left: 3rem;
 }
 
-.card .add .amout{
+.card .add .amount{
     margin-bottom: 3px;
     margin-left: 0.5rem;
 }

@@ -122,7 +122,7 @@ router.post('/remove', (req, res) => {
                 code: 3
             })
         }
-        Post.remove({ _id: req.params.id }, err => {
+        Post.remove({ _id: req.body.id }, err => {
             if (err) throw err;
             res.json({ success: true })
         })

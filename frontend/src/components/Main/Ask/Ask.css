@@ -38,6 +38,7 @@
     border: 1px solid #EEE;
     background: #8ce99a;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 .ask .send:hover{

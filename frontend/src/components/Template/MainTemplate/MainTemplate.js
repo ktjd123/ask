@@ -2,7 +2,7 @@ import React from 'react';
 import {Header} from 'components'
 import './MainTemplate.css'
 
-const MainTemplate = ({Profile, isMine, name, Ask, onQuestion, Menu, value, count, awI, awICount, onAnswer, onChange, onToggle, selected,posts ,CardList}) => {
+const MainTemplate = ({Profile, isMine, name, Ask, onQuestion, Menu, value, count, awI, awICount, onAnswer, onChange, onToggle, selected,posts ,CardList, handleRemove}) => {
     return (
         <div className='mainTemplate'>
             <Header/>
@@ -16,7 +16,7 @@ const MainTemplate = ({Profile, isMine, name, Ask, onQuestion, Menu, value, coun
                 <Menu onToggle={onToggle} selected={selected}/>
             </section>
             <section className='cardContainer'>
-                <CardList posts={posts} awI={awI} awICount={awICount} onChange={onChange} isMine={isMine} onAnswer={onAnswer}/>
+                <CardList posts={posts} awI={awI} awICount={awICount} onChange={onChange} isMine={isMine} onAnswer={onAnswer} onRemove={handleRemove}/>
             </section>
         </div>
     );

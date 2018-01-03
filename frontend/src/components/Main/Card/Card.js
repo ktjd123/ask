@@ -12,7 +12,7 @@ class Card extends Component {
     
 
     render() {
-        const { data, awI, awICount, onChange, isMine, onAnswer} = this.props
+        const { data, awI, awICount, onChange, isMine, onAnswer, onRemove} = this.props
         let answer = undefined
         let remove = undefined
         if (!isMine) {
@@ -35,7 +35,7 @@ class Card extends Component {
                 )
             }
             remove = (
-                <div className='remove'>삭제</div>
+                <div className='remove' onClick={() => onRemove(data._id)}>삭제</div>
             )
         }
         return (
@@ -51,7 +51,7 @@ class Card extends Component {
                 </div>
                 <div className='add'>
                     <a><i className='material-icons'>star_border</i></a>
-                    <div className='amout'>32</div>
+                    <div className='amount'>32</div>
                 </div>
             </div>
         );
