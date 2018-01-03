@@ -18,13 +18,16 @@ class Profile extends React.Component {
     shareToFacebook = () => {
         window.open("https://www.facebook.com/sharer/sharer.php?u="+window.location.href)
     }
+    shareToTwitter = () => {
+        window.open('https://twitter.com/intent/tweet?text=질문해주세요&url='+window.location.href)
+    }
 
     render() {
         const {name} = this.props
         return (
             <div className='profile'>
             <Helmet>
-                <title>ASK :: {name}</title>
+                <title>ASKED :: {name}</title>
             </Helmet>
                 <div className='name'>{name}</div>
                 <div className='shareBox'>
@@ -32,7 +35,7 @@ class Profile extends React.Component {
                     <div className='buttonBox'>
                         <div className='copy' onClick={this.copyToClipBoard}><i className="material-icons">content_copy</i></div>
                         <div className='fb' onClick={this.shareToFacebook}><img src={fbLogo} alt=""/></div>
-                        <div className='tw'><img src={twLogo} alt=""/></div>
+                        <div className='tw' onClick={this.shareToTwitter} ><img src={twLogo} alt=""/></div>
                     </div>
                 </div>
             </div>
