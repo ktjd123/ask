@@ -10,16 +10,21 @@ const Header = () => {
             <Link to="/login" className='my'>내 애스크</Link>
         </div>
     )
+    let rightButton = (
+        <div className='right'>
+            <Link to='/' className="loginB">로그인</Link>
+
+        </div>
+    )
     if (loginRegex.test(window.location.href)) {
         leftButton = undefined
+        rightButton = undefined
     }
     return (
         <div className="header">
             {leftButton}
             <Link to='/' className='logo'>ASKED</Link>
-            <div className="right">
-                <Link to='/' className="loginB">로그인</Link>
-            </div>
+            {rightButton}
         </div>
     );
 };
