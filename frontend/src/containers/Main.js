@@ -127,6 +127,7 @@ class Main extends Component {
         const {awI, awICount} = this.state
         if(awICount < 1){
             toast.error('내용을 입력해주세요!')
+            return
         }
         this.props.postAnswerRequest(id, awI).then(() => {
             if(this.props.answerStatus.status === "SUCCESS"){
