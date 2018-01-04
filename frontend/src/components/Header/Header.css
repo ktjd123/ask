@@ -19,9 +19,6 @@
     width: 0;
 }
 
-.header .left .my{
-    color: white;
-}
 .header .left .my:visited{
     color: white;
 }
@@ -36,12 +33,10 @@
 
 .header .right {
     flex-grow: 1;
+    color: white;
     width: 0;
 }
 
-.header .right .loginB{
-    color: white;
-}
 .header .right .loginB:active{
     color: white;
 }

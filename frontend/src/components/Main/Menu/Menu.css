@@ -4,6 +4,7 @@
     text-align: center;
 }
 .menu > div{
+    width: 0;
     flex-grow: 1;
     background: white;
     height: 60px;
