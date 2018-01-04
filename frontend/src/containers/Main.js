@@ -115,7 +115,8 @@ class Main extends Component {
         this.props.postQuestionRequest(replier, input, loggedIn).then(() => {
             if(this.props.questionStatus.status === "SUCCESS"){
                 this.setState({
-                    input: ''
+                    input: '',
+                    count: 0
                 })
                 toast.success('질문 했습니다!')
                 this.fetchPosts()
