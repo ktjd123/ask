@@ -12,7 +12,7 @@ postCount, nPostCount, randomUser, handleRandom
                 <Profile name={name}/>
             </section>
             <section className='ask'>
-                <Ask value={value} onChange={onChange} count={count} onQuestion={onQuestion}/>
+                <Ask name={name} value={value} onChange={onChange} count={count} onQuestion={onQuestion}/>
             </section>
             <section className='menu'>
                 <Menu onToggle={onToggle} selected={selected} postCount={postCount} nPostCount={nPostCount}/>
