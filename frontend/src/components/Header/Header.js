@@ -23,7 +23,7 @@ const Header = () => {
     return (
         <div className="header">
             {leftButton}
-                <Link to='/' className='logo'>|</Link>
+                <Link to='/' className='logo'>ASKED</Link>
             {rightButton}
         </div>
     );
