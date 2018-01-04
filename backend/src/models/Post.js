@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 const Schema = mongoose.Schema
 
 const Post = new Schema({
-    asker: {type: Schema.Types.ObjectId, default: undefined},
+    asker: {type: Schema.Types.ObjectId, default: null},
     replier: Schema.Types.ObjectId,
     question: String,
     answer: {type: String, default: undefined},
