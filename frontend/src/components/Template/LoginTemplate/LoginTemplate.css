@@ -10,6 +10,12 @@
     margin-top: 10vh;
 }
 
+.loginTemplate .des{
+    margin-top: 1rem;
+    margin-bottom: -3rem;
+    color: gray;
+}
+
 @media (max-height: 500px){
     .loginTemplate .loginT{
         margin-top: 50vh;
