@@ -8,12 +8,12 @@ const Header = () => {
     let leftButton = (
         <div className='left'>
             <Link to="/login" className='my'>내 애스크</Link>
+            {/* <a><i className="material-icons">shuffle</i></a> */}
         </div>
     )
     let rightButton = (
         <div className='right'>
             <Link to='/' className="loginB">로그인</Link>
-
         </div>
     )
     if (loginRegex.test(window.location.href)) {

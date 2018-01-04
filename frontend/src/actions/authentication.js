@@ -7,9 +7,43 @@ import {
     AUTH_REGISTER_FAILURE,
     AUTH_GET_STATUS,
     AUTH_GET_STATUS_SUCCESS,
-    AUTH_GET_STATUS_FAILURE
+    AUTH_GET_STATUS_FAILURE,
+    GET_RANDOM_ACCOUNT,
+    GET_RANDOM_ACCOUNT_SUCCESS,
+    GET_RANDOM_ACCOUNT_FAILURE
 } from './ActionTypes'
 import axios from 'axios'
+
+export function getRandomAccountRequest() {
+    return dispatch => {
+        dispatch(getRandomAccount())
+        return axios.post('/api/auth/random').then(res => {
+            dispatch(getRandomAccountSuccess(res.data.id))
+        }).catch(err => {
+            dispatch(getRandomAccountFailure(err.response.data.code))
+        })
+    }
+}
+
+export function getRandomAccount(){
+    return {
+        type: GET_RANDOM_ACCOUNT
+    }
+}
+
+export function getRandomAccountSuccess(id){
+    return {
+        type: GET_RANDOM_ACCOUNT_SUCCESS,
+        id
+    }
+}
+
+export function getRandomAccountFailure(code){
+    return {
+        type: GET_RANDOM_ACCOUNT_FAILURE,
+        code
+    }
+}
 
 export function loginRequest(id, pw){
     return dispatch => {

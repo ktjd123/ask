@@ -113,4 +113,19 @@ router.post('/logout', (req,res) => {
     return res.json({success: true})
 })
 
+router.post('/random', (req,res) => {
+    Account.count().exec().then(count => {
+        let random = Math.floor(Math.random() * count)
+        Account.findOne().skip(random).exec(account => {
+            return res.json({
+                id: account.id
+            })
+        }).catch(err => {
+            throw err
+        })
+    }).catch(err => {
+        throw err
+    })
+})
+
 export default router
