@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
-import {MainTemplate, Ask, Menu, Profile, CardList} from 'components'
-import {getStatusRequest} from 'actions/authentication'
-import {getInfoRequest} from 'actions/info'
+import { MainTemplate, Ask, Menu, Profile, CardList } from 'components'
 import {
-    getPostRequest, 
-    postQuestionRequest, 
-    postAnswerRequest, 
-    postRemoveRequest
+    getStatusRequest,
+    getRandomAccountRequest
+} from 'actions/authentication'
+import { getInfoRequest } from 'actions/info'
+import {
+    getPostRequest,
+    postQuestionRequest,
+    postAnswerRequest,
+    postRemoveRequest,
 } from 'actions/post'
-import {toast} from 'react-toastify'
-import {connect} from 'react-redux'
+import { toast } from 'react-toastify'
+import { connect } from 'react-redux'
 
 class Main extends Component {
 
@@ -25,32 +28,41 @@ class Main extends Component {
         posts: [],
         nPosts: [],
         postCount: 0,
-        nPostCount: 0
+        nPostCount: 0,
+        randomUser: ''
     }
 
     componentWillMount() {
         this.props.getStatusRequest().then(() => {
-            if(this.props.mainStatus.valid){
+            if (this.props.mainStatus.valid) {
                 this.setState({
                     loggedIn: true
                 })
-                if(this.props.match.params.id === this.props.mainStatus.currentUser){
+                if (this.props.match.params.id === this.props.mainStatus.currentUser) {
                     this.setState({
                         isMine: true
                     })
                 }
-                return
             }
         })
         const id = this.props.match.params.id
         this.props.getInfoRequest(id).then(() => {
-            if(this.props.infoStatus.status === "SUCCESS"){
+            if (this.props.infoStatus.status === "SUCCESS") {
                 this.setState({
                     name: this.props.infoStatus.name
                 })
-            }else{
+            } else {
                 toast.error('없는 사용자입니다')
                 this.props.history.push('/')
+            }
+        })
+        this.props.getRandomAccountRequest().then(() => {
+            if(this.props.randomStauts.status === "SUCCESS"){
+                this.setState({
+                    randomUser: this.props.randomStauts.user
+                })
+            }else{
+                toast.error(this.props.randomStauts.error)
             }
         })
     }
@@ -61,7 +73,7 @@ class Main extends Component {
     fetchPosts = () => {
         const id = this.props.match.params.id
         this.props.getPostRequest(id, true).then(() => {
-            if(this.props.postStatus.status === "SUCCESS"){
+            if (this.props.postStatus.status === "SUCCESS") {
                 this.setState({
                     posts: this.props.postStatus.data,
                     postCount: this.props.postStatus.data.length
@@ -70,7 +82,7 @@ class Main extends Component {
         })
 
         this.props.getPostRequest(id, false).then(() => {
-            if(this.props.postStatus.status === "SUCCESS"){
+            if (this.props.postStatus.status === "SUCCESS") {
                 this.setState({
                     nPosts: this.props.postStatus.nData,
                     nPostCount: this.props.postStatus.nData.length
@@ -78,20 +90,20 @@ class Main extends Component {
             }
         })
     }
-    
-    
+
+
 
     handleChange = (e) => {
         let count = e.target.value.length
-        if(count > 300){
+        if (count > 300) {
             return
         }
-        if(e.target.className==='awI'){
+        if (e.target.className === 'awI') {
             this.setState({
                 awI: e.target.value,
                 awICount: count
             })
-        }else{
+        } else {
             this.setState({
                 input: e.target.value,
                 count: count
@@ -106,14 +118,14 @@ class Main extends Component {
     }
 
     handlePostQuestion = () => {
-        const {input, loggedIn} = this.state
+        const { input, loggedIn } = this.state
         const replier = this.props.match.params.id
-        if(input.length < 1){
+        if (input.length < 1) {
             toast.error('내용을 입력해주세요')
             return
         }
         this.props.postQuestionRequest(replier, input, loggedIn).then(() => {
-            if(this.props.questionStatus.status === "SUCCESS"){
+            if (this.props.questionStatus.status === "SUCCESS") {
                 this.setState({
                     input: '',
                     count: 0
@@ -125,20 +137,20 @@ class Main extends Component {
     }
 
     handlePostAnswer = (id) => {
-        const {awI, awICount} = this.state
-        if(awICount < 1){
+        const { awI, awICount } = this.state
+        if (awICount < 1) {
             toast.error('내용을 입력해주세요!')
             return
         }
         this.props.postAnswerRequest(id, awI).then(() => {
-            if(this.props.answerStatus.status === "SUCCESS"){
+            if (this.props.answerStatus.status === "SUCCESS") {
                 this.setState({
                     awI: '',
                     awICount: 0
                 })
                 toast.success('답변 했습니다!')
                 this.fetchPosts()
-            }else{
+            } else {
                 toast.error(this.props.answerStatus.error)
             }
         })
@@ -146,28 +158,33 @@ class Main extends Component {
 
     handleRemove = id => {
         this.props.postRemoveRequest(id).then(() => {
-            if(this.props.removeStatus.status === "SUCCESS"){
+            if (this.props.removeStatus.status === "SUCCESS") {
                 toast.success('삭제 했습니다!')
                 this.fetchPosts()
             }
         })
     }
 
+    handleRandom = () => {
+        window.location.href = "/"+this.state.randomUser
+    }
+
     render() {
         let {
-            input, 
-            count, 
-            awI, 
-            awICount, 
-            selected, 
-            name, 
-            posts, 
-            nPosts, 
+            input,
+            count,
+            awI,
+            awICount,
+            selected,
+            name,
+            posts,
+            nPosts,
             isMine,
             postCount,
-            nPostCount
+            nPostCount,
+            randomUser
         } = this.state
-        if(selected !== 'ask'){
+        if (selected !== 'ask') {
             posts = nPosts
         }
         const {
@@ -175,31 +192,34 @@ class Main extends Component {
             handleToggle,
             handlePostQuestion,
             handlePostAnswer,
-            handleRemove
+            handleRemove,
+            handleRandom
         } = this
 
         return (
             <div>
                 <MainTemplate
-                Profile={Profile}
-                isMine={isMine}
-                name={name}
-                Ask={Ask}
-                onQuestion = {handlePostQuestion}
-                Menu={Menu} 
-                value={input} 
-                onChange={handleChange} 
-                count={count}
-                onToggle={handleToggle}
-                selected={selected}
-                posts={posts}
-                CardList={CardList}
-                awI = {awI}
-                awICount={awICount}
-                onAnswer = {handlePostAnswer}
-                handleRemove={handleRemove}
-                postCount={postCount}
-                nPostCount={nPostCount}
+                    Profile={Profile}
+                    isMine={isMine}
+                    name={name}
+                    Ask={Ask}
+                    onQuestion={handlePostQuestion}
+                    Menu={Menu}
+                    value={input}
+                    onChange={handleChange}
+                    count={count}
+                    onToggle={handleToggle}
+                    selected={selected}
+                    posts={posts}
+                    CardList={CardList}
+                    awI={awI}
+                    awICount={awICount}
+                    onAnswer={handlePostAnswer}
+                    handleRemove={handleRemove}
+                    postCount={postCount}
+                    nPostCount={nPostCount}
+                    randomUser={randomUser}
+                    handleRandom={handleRandom}
                 />
             </div>
         );
@@ -213,12 +233,13 @@ const mapStateToProps = state => {
         postStatus: state.post.list,
         questionStatus: state.post.postQuestion,
         answerStatus: state.post.postAnswer,
-        removeStatus: state.post.postRemove
+        removeStatus: state.post.postRemove,
+        randomStauts: state.authentication.random
     }
 }
 
 const mapDispatchToProps = dispatch => {
-    return{
+    return {
         getStatusRequest: () => {
             return dispatch(getStatusRequest())
         },
@@ -236,6 +257,9 @@ const mapDispatchToProps = dispatch => {
         },
         postRemoveRequest: (id) => {
             return dispatch(postRemoveRequest(id))
+        },
+        getRandomAccountRequest: () => {
+            return dispatch(getRandomAccountRequest())
         }
     }
 }

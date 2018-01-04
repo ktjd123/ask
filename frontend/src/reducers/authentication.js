@@ -10,7 +10,10 @@ import {
     AUTH_GET_STATUS_FAILURE,
     GET_INFO,
     GET_INFO_SUCCESS,
-    GET_INFO_FAILURE
+    GET_INFO_FAILURE,
+    GET_RANDOM_ACCOUNT,
+    GET_RANDOM_ACCOUNT_SUCCESS,
+    GET_RANDOM_ACCOUNT_FAILURE
 }from '../actions/ActionTypes';
 import update from 'react-addons-update'
 
@@ -32,6 +35,11 @@ const initialState = {
         isLoggedIn: false,
         currentUser: '',
         currentName: ''
+    },
+    random: {
+        status: 'INIT',
+        user: '',
+        error: -1
     }
 }  
 
@@ -126,6 +134,29 @@ function authentication(state = initialState, action){
             info:{
                 status: {$set: 'FAILURE'},
                 name: {$set: ''}
+            }
+        })
+
+        case GET_RANDOM_ACCOUNT:
+        return update(state, {
+            random: {
+                status: {$set: 'PENDING'}
+            }
+        })
+
+        case GET_RANDOM_ACCOUNT_SUCCESS:
+        return update(state, {
+            random: {
+                status: {$set: 'SUCCESS'},
+                user: {$set: action.id}
+            }
+        })
+
+        case GET_RANDOM_ACCOUNT_FAILURE:
+        return update(state, {
+            random: {
+                status: {$set: 'FAILURE'},
+                error: {$set: action.code}
             }
         })
 

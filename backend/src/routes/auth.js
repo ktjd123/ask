@@ -116,7 +116,12 @@ router.post('/logout', (req,res) => {
 router.post('/random', (req,res) => {
     Account.count().exec().then(count => {
         let random = Math.floor(Math.random() * count)
-        Account.findOne().skip(random).exec(account => {
+        Account.findOne().skip(random).exec().then(account => {
+            if(!account){
+                return res.status(404).json({
+                    code: 1
+                })
+            }
             return res.json({
                 id: account.id
             })

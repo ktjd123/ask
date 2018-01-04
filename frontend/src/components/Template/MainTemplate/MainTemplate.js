@@ -3,11 +3,11 @@ import {Header} from 'components'
 import './MainTemplate.css'
 
 const MainTemplate = ({Profile, isMine, name, Ask, onQuestion, Menu, value, count, awI, awICount, onAnswer, onChange, onToggle, selected,posts ,CardList, handleRemove,
-postCount, nPostCount
+postCount, nPostCount, randomUser, handleRandom
 }) => {
     return (
         <div className='mainTemplate'>
-            <Header/>
+            <Header randomUser={randomUser} handleRandom={handleRandom}/>
             <section className='profile'>
                 <Profile name={name}/>
             </section>

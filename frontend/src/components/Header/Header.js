@@ -2,13 +2,13 @@ import React from 'react';
 import './Header.css'
 import { Link } from 'react-router-dom'
 
-const Header = () => {
+const Header = ({randomUser, handleRandom}) => {
 
     const loginRegex = /(login|register)/
     let leftButton = (
         <div className='left'>
             <Link to="/login" className='my'>내 애스크</Link>
-            {/* <a><i className="material-icons">shuffle</i></a> */}
+            <a onClick={handleRandom}><i className="material-icons">shuffle</i></a>
         </div>
     )
     let rightButton = (
