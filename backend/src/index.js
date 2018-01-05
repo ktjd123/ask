@@ -48,6 +48,11 @@ app.use('/api', api);
 
 //client side routing support
 app.use(express.static(path.resolve(__dirname, "..", "frontend")))
+
+app.get('/google55103000c90a44a2', (req,res) => {
+    res.sendFile(path.resolve(__dirname, '..', 'frontend', 'google55103000c90a44a2.html'))
+})
+
 app.get('*', (req,res)=> {
     res.sendFile(path.resolve(__dirname, "..", "frontend", "index.html"))
 })
