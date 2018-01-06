@@ -124,6 +124,12 @@ class Main extends Component {
             toast.error('내용을 입력해주세요')
             return
         }
+        let regex = /성(.*)교/
+        if (regex.test(input)){
+            toast.error(input + '은 금지어 입니다')
+            return
+        }
+
         this.props.postQuestionRequest(replier, input, loggedIn).then(() => {
             if (this.props.questionStatus.status === "SUCCESS") {
                 this.setState({
