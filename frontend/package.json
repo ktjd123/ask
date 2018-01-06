@@ -54,7 +54,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "node scripts/start.js",
+    "d": "node scripts/start.js",
     "build": "node scripts/build.js && rm ../build/frontend/static/js/*.map",
     "test": "node scripts/test.js --env=jsdom"
   },
